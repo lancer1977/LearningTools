@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SpellingTest.Maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:flashCards="clr-namespace:SpellingTest.Maui.Pages.FlashCards"
+    xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+    xmlns:cardGame1="clr-namespace:SpellingTest.Maui.Pages.CardGame"
+    xmlns:mathPicker="using:SpellingTest.Maui.Pages.MathPicker"
+    Shell.FlyoutBehavior="Disabled">
+    <TabBar>
+        <ShellContent Title="Card Game" ContentTemplate="{DataTemplate cardGame1:CardGamePage}" />
+        <ShellContent Title="Math Launcher" ContentTemplate="{DataTemplate mathPicker:MathPickerPage}" />
+        <ShellContent Title="Flash Card" ContentTemplate="{DataTemplate flashCards:FlashCardPage}" />
+        <ShellContent Title="Quiz" ContentTemplate="{DataTemplate spelling:QuizListPickerPage}"  />
+
+    </TabBar>
+ 
+</Shell>

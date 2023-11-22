@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:PageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
+                        xmlns:controls="clr-namespace:PolyhydraGames.Core.Maui.Controls;assembly=PolyhydraGames.Core.Maui"
+                        Title="{Binding Title}" 
+                        x:Class="SpellingTest.Maui.Pages.FlashCards.FlashCardPage">
+            <Grid RowDefinitions="*,Auto"> 
+        
+    <ScrollView Grid.Row="0" x:Name="scroll">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">  
+            <Label Text="Definition" x:Name="top"/>
+            <Frame  Grid.Row="1">
+                <Label  Text="{Binding Word.Name}" IsVisible="{Binding ShowDefinition}"  FontSize="Large" HorizontalTextAlignment="Center" />
+            </Frame> 
+            <Label Grid.Row="2" Text="Name" IsVisible="{Binding ShowName}"/>
+            <Frame Grid.Row="3" IsVisible="{Binding ShowName}" x:Name="bottom">
+                    <Label Text="{Binding Word.Description}"  FontSize="Large" HorizontalTextAlignment="Center" />
+            </Frame>  
+        </Grid>   
+    </ScrollView> 
+            <Button   Grid.Row="1"  Text="{Binding ButtonText}" Command="{Binding ClickCommand}" Margin="30,10" TextColor="Black" BackgroundColor="Aqua" /> 
+ </Grid>
+
+</controls:PageBase>
+

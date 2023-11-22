@@ -1,0 +1,85 @@
+﻿@inject ICurrentPage _currentPage; 
+@using Microsoft.AspNetCore.Identity
+@using ICurrentPage = SpellingTest.Web.Services.CurrentPage.ICurrentPage
+@implements IDisposable;
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">@Title</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+ 
+
+<Bar Mode="BarMode.VerticalInline"
+     Breakpoint="Breakpoint.Mobile"
+     NavigationBreakpoint="Breakpoint.Mobile"
+     ThemeContrast="ThemeContrast.Dark"> 
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="quizpicker"><BarIcon IconName="IconName.Bookmark" />Quiz</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="math"><BarIcon IconName="IconName.Bookmark" />Math</BarLink>
+            </BarItem>
+            <AuthorizeView>
+                <Authorized>
+                    <form method="post" action="LogOut">
+                        <button type="submit" class="nav-link btn btn-link">Log out</button>
+                    </form>
+                </Authorized>
+                <NotAuthorized>
+                    <BarItem>
+                        <BarLink To="Login"><BarIcon IconName="IconName.Bookmark" /> Log In</BarLink>
+                    </BarItem>
+                </NotAuthorized>
+            </AuthorizeView>
+        </BarStart>
+    </BarMenu>
+</Bar>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    IDisposable disposeMe;
+
+    public string Title { get; set; } = "Polyhydra";
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+
+
+
+    public void Dispose()
+    {
+        disposeMe.Dispose();
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        
+
+        disposeMe = _currentPage.NameChanged.Subscribe(x =>
+        {
+            
+            Title = string.IsNullOrEmpty(x) ? "Polyhydra Games" : x;
+            StateHasChanged();
+        });
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync(); 
+    }
+
+}

@@ -1,0 +1,69 @@
+﻿@page "/quiz"
+@using PolyhydraGames.Learning.Interfaces
+@using SpellingTest.Core.ViewModels.Math
+@using SpellingTest.Core.ViewModels.Quiz
+@using SpellingTest.Web.Components
+@inherits SpellingTest.Web.Components.PolyComponentBase<SpellingTest.Core.ViewModels.Quiz.QuizViewModel>
+<h3>Quiz</h3>
+<Row>
+    <Label FontSize="Large">@ViewModel.Word?.Description</Label>
+</Row>
+
+
+<Row >
+
+    <Column ColumnSize="ColumnSize.Is4">
+        <Button Color="Color.Info" Command="ViewModel.AnswerCommand" CommandParameter="ViewModel.Option1Text">@ViewModel.Option1Text</Button>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <Button Color="Color.Info" Command="ViewModel.AnswerCommand" CommandParameter="ViewModel.Option2Text">@ViewModel.Option2Text</Button>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <Button Color="Color.Info" Command="ViewModel.AnswerCommand" CommandParameter="ViewModel.Option3Text">@ViewModel.Option3Text</Button>
+    </Column>
+
+</Row>
+
+<Table>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell> Name </TableHeaderCell>
+        </TableRow>
+
+    </TableHeader>
+    @foreach (var item in ViewModel?.Messages?.ToList() ?? new List<MathResult>())
+    {
+        <TableRow>
+            <TableRowCell> @item.Text</TableRowCell>
+        </TableRow>
+    }
+</Table>
+
+
+<Label FontSize="Large" HorizontalTextAlignment="Center">@ViewModel.Results</Label>
+
+
+@code {
+    [QueryStringParameter] public Guid Id { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
+    [Inject] IQuizService QuizService { get; set; }
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id == Guid.Empty) return;
+        await ViewModel.LoadAsync(Id);
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await ViewModel.OnAppearingAsync();
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        // 👇 Read the value of each property decorated by [QueryStringParameter] from the query string
+        this.SetParametersFromQueryString(NavigationManager);
+        return base.SetParametersAsync(parameters);
+    }
+
+    [Inject] public override QuizViewModel ViewModel { get; set; }
+}

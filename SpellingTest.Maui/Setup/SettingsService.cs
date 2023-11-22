@@ -1,0 +1,2 @@
+﻿namespace SpellingTest.Maui.Setup;
+

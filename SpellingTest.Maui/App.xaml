@@ -1,0 +1,16 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<maui:ShellApplication xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:local="clr-namespace:SpellingTest.Maui"
+                  xmlns:maui="clr-namespace:PolyhydraGames.Core.Maui;assembly=PolyhydraGames.Core.Maui"
+                  x:Class="SpellingTest.Maui.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/converters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</maui:ShellApplication>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maui:InjectablePageBase x:TypeArguments="speedMath:SpeedMathViewModel"
+                          xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:maui="clr-namespace:SpellingTest.Maui"
+                          xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+                          xmlns:speedMath="clr-namespace:SpellingTest.Core.ViewModels.Math;assembly=SpellingTest.Core"
+                          Title="{Binding Title}"
+                          x:Class="SpellingTest.Maui.Pages.SpeedMath.SpeedMathPage">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="2*,*,*,2*" Margin="20,10"> 
+  
+        <Label Grid.Row="0" Grid.Column="2" Text="{Binding CurrentQuestion.Number1}" FontSize="Large" HorizontalTextAlignment="End" />
+        <Label Grid.Row="1" Grid.Column="2" Text="{Binding CurrentQuestion.Number2}" FontSize="Large"  HorizontalTextAlignment="End"  />
+        <Label Grid.Row="1" Grid.Column="1" Text="{Binding FeatureText}"  FontSize="Large"  HorizontalTextAlignment="End" />
+        <BoxView Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" HeightRequest="2" HorizontalOptions="Fill" />
+        <StackLayout Orientation="Horizontal"   Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0" >
+            <Label Text="Answer:" VerticalTextAlignment="Center"/>
+            <Entry x:Name="answerBox"  HorizontalOptions="FillAndExpand" Keyboard="Numeric" Text="{Binding Answer}" />
+        </StackLayout>
+
+
+ 
+        <Label Grid.Row="5"  Grid.Column="0"  Grid.ColumnSpan="4" Text="{Binding Results}" FontSize="Large" HorizontalTextAlignment="Center" /> 
+    </Grid>
+	
+
+</maui:InjectablePageBase>
+

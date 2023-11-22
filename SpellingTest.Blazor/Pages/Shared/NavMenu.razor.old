@@ -1,0 +1,94 @@
+﻿@inject ICurrentPage _currentPage;
+@implements IDisposable;
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">@Title</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+    
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="campaign/home">
+                <span class="oi oi-plus" aria-hidden="false"></span> Campaigns
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="konaplain">
+                <span class="oi oi-plus" aria-hidden="false"></span> Kona Plain
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="chat">
+                <span class="oi oi-plus" aria-hidden="false"></span> Chat
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="craft">
+                <span class="oi oi-plus" aria-hidden="true"></span> Craft
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="loot">
+                <span class="oi oi-plus" aria-hidden="true"></span> Loot
+            </NavLink>
+        </div>
+
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="spellbook">
+                <span class="oi oi-plus" aria-hidden="true"></span> Spellbook
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="software">
+                <span class="oi oi-plus" aria-hidden="true"></span> Software
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    IDisposable disposeMe;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+ 
+    public string Title { get; set; } = "Polyhydra";
+
+
+    public void Dispose()
+    {
+        disposeMe.Dispose();
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        disposeMe = _currentPage.NameChanged.Subscribe(x =>
+        {
+            Title = x;
+            StateHasChanged();
+        });
+    }
+}

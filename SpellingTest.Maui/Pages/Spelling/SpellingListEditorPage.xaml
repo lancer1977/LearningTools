@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:PageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+   x:TypeArguments="spelling:QuizListPickerViewModel" 
+    xmlns:controls="clr-namespace:PolyhydraGames.Core.Maui.Controls;assembly=PolyhydraGames.Core.Maui"
+    xmlns:spelling="clr-namespace:SpellingTest.ViewModels.Spelling;assembly=SpellingTest.Core"
+    Title="Spelling Lists"
+    x:Class="SpellingTest.Maui.Pages.Spelling.QuizListEditorPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding MenuCommand}" Text="+"  />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto">
+     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                 <Label  Text="Title:" FontAttributes="Bold" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Center" /> 
+        <Entry  Text="{Binding SpellingListModel.Name}" FontSize="Large"  HorizontalOptions="FillAndExpand"  />
+     </StackLayout>
+
+        <BoxView Grid.Row="1" HeightRequest="3"/>  
+        <StackLayout Grid.Row="2" >
+            <Label Text="Comma Seperated Words [Tuna,Chicken]" />
+            <StackLayout Orientation="Horizontal"  >
+                <Entry Text="{Binding GroupText}" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Add Group" Command="{Binding AddGroupCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Grid.Row="3" >
+            <Label Text="Import from URL (CSV)" />
+            <StackLayout Orientation="Horizontal"  >
+                <Entry Text="{Binding URL}" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Add" Command="{Binding AddUrlCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        <Label Grid.Row="4" Text="Items" FontSize="Large" HorizontalTextAlignment="Center" />
+        <ListView Grid.Row="5" ItemsSource="{Binding Words}" x:Name="list" ItemSelected="Handle_ItemSelected">
+            <ListView.ItemTemplate> 
+                <DataTemplate>
+                    <TextCell  Text="{Binding Name}"  Detail="{Binding Definition}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Grid.Row="6" Command="{Binding SaveCommand}" Text="Save"></Button>
+    </Grid>
+
+</controls:PageBase>
+

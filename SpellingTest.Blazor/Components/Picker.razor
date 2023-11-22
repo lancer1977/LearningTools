@@ -1,0 +1,44 @@
+﻿@if (Items != null)
+{      <Column>
+            <p> @Title</p>
+
+            <Select @onchange="OnSelected" @bind-SelectedValue="@SelectedValue" >
+                @if (ShowNull)
+                {
+                    <SelectItem TValue="object" Value="@null">@GetTitle(null)</SelectItem>
+                }
+                @foreach (var item in Items)
+                {
+                    <SelectItem   Value="@item" >@GetTitle(item)</SelectItem>
+                }
+            </Select> 
+       </Column>
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public IEnumerable<object>? Items { get; set; }
+    [Parameter]
+    public Func<object?, string?> GetTitle { get; set; } = x => x.ToString();
+    [Parameter]
+    public Func<ChangeEventArgs, Task>? OnSelected { get; set; }
+    [Parameter] public bool ShowNull { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public object? SelectedValue
+    {
+        get { return default; } 
+        set
+        {
+        }
+    }
+
+
+}

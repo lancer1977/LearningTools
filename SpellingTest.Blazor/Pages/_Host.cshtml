@@ -1,0 +1,13 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Authentication
+@namespace SpellingTest.Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+    //_ownerService.Update(HttpContext);
+    var token = await HttpContext.GetTokenAsync("access_token");
+    //var context =   HttpContext; 
+}
+<script src="/js/downloadFileFromStream.js"></script>
+<script src="/js/audio.js"></script>
+<component type="typeof(App)" param-Token="token" render-mode="ServerPrerendered" />

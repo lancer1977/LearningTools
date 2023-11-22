@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maui:InjectablePageBase
+    x:TypeArguments="cardGame:CardGameViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="Page"
+    xmlns:cardGame1="using:SpellingTest.Maui.Pages.CardGame"
+    xmlns:maui="clr-namespace:SpellingTest.Maui"
+    xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+    xmlns:cardGame="clr-namespace:SpellingTest.Core.ViewModels.CardGame;assembly=SpellingTest.Core"
+    x:Class="SpellingTest.Maui.Pages.CardGame.CardGamePage">
+    <FlexLayout Direction="Column"
+            
+                >
+        <Label Text="{Binding Game.Instructions}"  FontSize="Large" HorizontalTextAlignment="Center" />
+        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
+            <cardGame1:CardView BackgroundColor="Cyan" VerticalOptions="Center" BindingContext="{Binding Game.Card1}">
+                <cardGame1:CardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectCard, Source={x:Reference Page}}" CommandParameter="{Binding Name}"></TapGestureRecognizer>
+                </cardGame1:CardView.GestureRecognizers>
+            </cardGame1:CardView>
+            <cardGame1:CardView BackgroundColor="Cyan" VerticalOptions="Center" BindingContext="{Binding Game.Card2}"  Grid.Column="1" >
+                <cardGame1:CardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectCard, Source={x:Reference Page}}" CommandParameter="{Binding Name}"></TapGestureRecognizer>
+                </cardGame1:CardView.GestureRecognizers>
+            </cardGame1:CardView>
+            <cardGame1:CardView BackgroundColor="Cyan" VerticalOptions="Center" BindingContext="{Binding Game.Card3}"  Grid.Column="2" >
+                <cardGame1:CardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectCard, Source={x:Reference Page}}" CommandParameter="{Binding Name}"></TapGestureRecognizer>
+                </cardGame1:CardView.GestureRecognizers>
+            </cardGame1:CardView>
+        </Grid>
+
+        <Label BackgroundColor="Bisque"   Text="{Binding Message}" FontSize="Large" HorizontalTextAlignment="Center" FlexLayout.Grow="1"/>
+        <StackLayout >
+            <Button Text="Reset" Command="{Binding ResetCommand}" FlexLayout.AlignSelf="End" />
+            <StackLayout Orientation="Horizontal"  FlexLayout.AlignSelf="End">
+                <Switch IsToggled="{Binding ShowImage}"/>
+                <Switch IsToggled="{Binding ShowName}"/>
+            </StackLayout>
+        </StackLayout>
+
+    </FlexLayout>
+
+
+
+</maui:InjectablePageBase>
+

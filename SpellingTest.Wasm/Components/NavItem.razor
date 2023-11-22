@@ -1,0 +1,12 @@
+﻿@using Blazorise
+<Div>
+    <NavLink class="nav-link" href="@Uri">
+        <Icon Name="@Icon" Margin="Margin.Is2" /> @Title
+    </NavLink>
+</Div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Uri { get; set; }
+    [Parameter] public IconName Icon { get; set; }
+}

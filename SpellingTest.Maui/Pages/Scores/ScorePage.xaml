@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<maui:InjectablePageBase x:TypeArguments="scores:ScoreViewModel" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:maui="clr-namespace:SpellingTest.Maui"
+                         xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+                         xmlns:scores="clr-namespace:SpellingTest.Core.ViewModels.Scores;assembly=SpellingTest.Core"
+                         Title="Scores"
+                         x:Class="SpellingTest.Maui.Pages.Scores.ScorePage">
+    <StackLayout>
+        <FlexLayout JustifyContent="SpaceEvenly">
+            <Picker Title="Platform" ItemsSource="{Binding IdiomSelections}" SelectedItem="{Binding SelectedIdiom}"/>
+            <Picker Title="Feature" ItemsSource="{Binding FeatureSelections}" SelectedItem="{Binding SelectedFeature}"/>
+        
+        </FlexLayout>
+        <CollectionView ItemsSource="{Binding Items}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Red">
+                        <Grid RowDefinitions="Auto,Auto"  Margin="5">
+                            <StackLayout Grid.Row="0" Orientation="Horizontal" >
+
+                                <Label Text="{Binding Name, StringFormat='Student: {0}'}" TextColor="Red"  />
+                                <Label Text="{Binding Date}" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+
+                            <FlexLayout  Grid.Row="1"   JustifyContent="SpaceEvenly" >
+                                <FlexLayout.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="HorizontalTextAlignment" Value="Center" />
+                                    </Style>
+                                </FlexLayout.Resources>
+                                <Label Text="{Binding Operation, StringFormat='Feature&#10;{0}'}" TextColor="Orange" HorizontalTextAlignment="Center" />
+
+                                <Label Text="{Binding Diff, StringFormat='Difficulty&#10;{0}'}" TextColor="YellowGreen"  />
+
+                                <Label Text="{Binding Idiom, StringFormat='Platform&#10;{0}'}" TextColor="Teal" />
+                                <Label Text="{Binding Ratio, StringFormat='Secs/Quest&#10;{0}'}" TextColor="Teal" />
+
+                            </FlexLayout>
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+  
+</maui:InjectablePageBase>

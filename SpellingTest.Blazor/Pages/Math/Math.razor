@@ -1,0 +1,51 @@
+﻿@page "/math" 
+@using SpellingTest.Core.ViewModels.Math 
+@using PolyhydraGames.Learning.Interfaces
+@inherits SpellingTest.Web.Components.PolyComponentBase<SpellingTest.Core.ViewModels.Math.MathViewModel>
+<h3>Quiz</h3>
+
+<Div>        
+    
+    <Row   Flex="Flex.JustifyContent.End">
+        <Text  FontSize="Large" HorizontalTextAlignment="End">@ViewModel.Number1 </Text >
+    </Row>
+    <Row Flex="Flex.JustifyContent.End">
+        <Text  FontSize="Large" HorizontalTextAlignment="End">@ViewModel.FeatureText </Text >  
+        <Text  FontSize="Large" HorizontalTextAlignment="End">@ViewModel.Number2 </Text >
+    </Row>
+<Div Flex="Flex.JustifyContent.Between" Margin="Margin.Is3.FromBottom"  >
+
+        <Button Command="ViewModel.AnswerCommand" CommandParameter="1" Color="Color.Primary">@ViewModel.Option1Text</Button>
+
+        <Button Command="ViewModel.AnswerCommand" CommandParameter="2" Color="Color.Primary">@ViewModel.Option2Text</Button>
+
+        <Button Command="ViewModel.AnswerCommand" CommandParameter="3" Color="Color.Primary">@ViewModel.Option3Text</Button>
+
+    </Div>
+</Div>
+<Table>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell> Name </TableHeaderCell>
+            <TableHeaderCell>@ViewModel.Results</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    @foreach (var item in ViewModel?.Messages?.ToList() ?? new List<MathResult>())
+    {
+        <TableRow>
+            <TableRowCell> @item.Text</TableRowCell>
+        </TableRow>
+    }
+</Table>
+
+
+
+@code {
+    [Inject] public override MathViewModel ViewModel { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await  base.OnInitializedAsync();  
+        await ViewModel.LoadAsync(Feature.Add, 10, Difficulty.Easy);
+    }
+
+}

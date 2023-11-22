@@ -1,0 +1,42 @@
+﻿@page "/quizpicker"
+@using IDialogService = PolyhydraGames.Core.Interfaces.IDialogService
+@using PolyhydraGames.Learning.Interfaces
+@using SpellingTest.Core.ViewModels.Quiz 
+@using Table = Blazorise.Table
+@inject NavigationManager Navigation
+<h3>QuizListPicker</h3>
+
+<Table>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell> Name </TableHeaderCell>
+            <TableHeaderCell> Short Description </TableHeaderCell>
+            <TableHeaderCell> Launch </TableHeaderCell>
+        </TableRow>
+
+    </TableHeader>
+    @foreach (var item in ViewModel?.Items ?? new List<ITopic>())
+    {
+        <TableRow>
+            <TableRowCell> @item.Name</TableRowCell>
+            <TableRowCell>  @item.Description</TableRowCell>
+        <TableRowCell>  <Button Color="Color.Primary" Command="ViewModel.TestCommand" CommandParameter="item">Run</Button> </TableRowCell>
+        </TableRow>
+    }
+</Table>
+
+
+@code {
+    [Inject] IQuizService quizService { get; set; }
+    [Inject] IDialogService displayService { get; set; }
+    [Inject] ISpellingNavigatorService navigator { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        ViewModel = new QuizListPickerViewModel(navigator, displayService, quizService);
+        await ViewModel.OnAppearingAsync();
+    }
+
+    public QuizListPickerViewModel? ViewModel { get; set; } 
+
+}

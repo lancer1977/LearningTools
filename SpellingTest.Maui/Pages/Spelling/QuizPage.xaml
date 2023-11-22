@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:PageBase
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             Title="{Binding Title}"   
+                             xmlns:controls="using:PolyhydraGames.Core.Maui.Controls"
+                             xmlns:controls1="using:SpellingTest.Maui.Controls"
+    x:Class="SpellingTest.Maui.Pages.Spelling.QuizPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /><!--Title -->
+            <RowDefinition Height="Auto" /> <!--Bar --> 
+            <RowDefinition Height="*" /><!--Results -->
+            <RowDefinition Height="Auto" /> <!--Options -->
+            <RowDefinition Height="Auto" /><!--Info -->
+            
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Word.Description}" FontSize="Large" HorizontalTextAlignment="Center" />
+        <BoxView Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" HeightRequest="2" HorizontalOptions="Fill" />
+        <Grid  HorizontalOptions="FillAndExpand"   Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="{Binding Option1Text}" Command="{Binding AnswerCommand}" CommandParameter="{Binding Option1Text}" />
+            <Button Grid.Column="1" Text="{Binding Option2Text}" Command="{Binding AnswerCommand}" CommandParameter="{Binding Option2Text}" />
+            <Button Grid.Column="2" Text="{Binding Option3Text}" Command="{Binding AnswerCommand}" CommandParameter="{Binding Option3Text}" />
+        </Grid>
+        <ListView Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2" ItemsSource="{Binding Messages}" HasUnevenRows="True">
+
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                <controls1:AnswerCell/>
+                    </DataTemplate>
+            </ListView.ItemTemplate>   
+        </ListView>
+        <Label Grid.Row="4"  Grid.Column="0"  Grid.ColumnSpan="2" Text="{Binding Results}" FontSize="Large" HorizontalTextAlignment="Center" />
+
+
+    </Grid>
+
+</controls:PageBase>
+

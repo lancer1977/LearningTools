@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maui:InjectablePageBase x:TypeArguments="math:MathViewModel" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+                             xmlns:math="clr-namespace:SpellingTest.Core.ViewModels.Math;assembly=SpellingTest.Core"
+                             xmlns:maui="clr-namespace:SpellingTest.Maui"
+                             Title="Registration"
+                             x:Class="SpellingTest.Maui.Pages.Launcher.LauncherPage">
+    <StackLayout>
+        <Label Text="Name" HorizontalOptions="FillAndExpand"></Label>
+        <Entry Text="{Binding Name}"></Entry>
+        <Button Text="Save Name" Command="{Binding SaveNameCommand}"  />
+        <Button Text="Test" Command="{Binding TestCommand}"  />
+
+    </StackLayout>
+
+
+</maui:InjectablePageBase>
+

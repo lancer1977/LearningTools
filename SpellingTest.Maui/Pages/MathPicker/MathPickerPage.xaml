@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controls:PopupPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                        xmlns:controls="using:PolyhydraGames.Core.Maui.Controls"
+                        BackgroundColor="Transparent"
+                        x:Class="SpellingTest.Maui.Pages.MathPicker.MathPickerPage"> 
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowDefinitions="Auto,*">
+        <BoxView  Opacity=".70"  BackgroundColor="Black"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" Grid.RowSpan="2"/>
+        <StackLayout Margin="30" BackgroundColor="White" VerticalOptions="Start" Grid.Row="0">
+            <StackLayout BackgroundColor="Orange">
+                <Label HorizontalTextAlignment="Center" TextColor="Black" FontAttributes="Bold"  Margin="0,15" Text="Math Rules" />
+            </StackLayout>
+            <Label Text="Feature" />
+            <Picker ItemsSource="{Binding FeatureOptions}" SelectedItem="{Binding Feature}" />
+            <Label Text="Difficulty" />
+            <Picker ItemsSource="{Binding DifficultyOptions}" SelectedItem="{Binding Difficulty}" />
+            <Label Text="Questions" />
+            <Picker ItemsSource="{Binding QuestionOptions}" SelectedItem="{Binding Question}" />
+            <Button Text="Start" Command="{Binding StartCommand}" />
+        </StackLayout>
+    </Grid>
+
+   
+</controls:PopupPageBase>
