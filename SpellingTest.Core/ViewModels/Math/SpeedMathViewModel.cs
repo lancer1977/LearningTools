@@ -11,6 +11,29 @@ using SpellingTest.Core.Service;
 
 namespace SpellingTest.Core.ViewModels.Math
 {
+    public class SpeedMathConfig
+    {
+        public int Count { get; }
+        public Difficulty Difficulty { get; }
+        public Feature Feature { get; }
+        private int LowerRange { get; }
+        private int HighRange { get; }
+
+        public SpeedMathConfig(int count, Difficulty difficulty, Feature feature)
+        {
+            Count = count;
+            Difficulty = difficulty;
+            Feature = feature;
+            LowerRange = SpeedMathHelper.GetLower(difficulty);
+            HighRange = SpeedMathHelper.GetUpper(difficulty);
+        }
+
+        public List<MathQuestion> GetQuestionss()
+        {
+            var items = SpeedMathHelper.PopulateQuestions(Feature, LowerRange, HighRange).GetRandomizedList();
+            return items.GetRange(0, Count);
+        }
+    }
     public class SpeedMathViewModel : ViewModelAsyncBase, IDisposable
     {
         private int QuestionsCount { get; set; }
@@ -44,20 +67,22 @@ namespace SpellingTest.Core.ViewModels.Math
 
             _featureText = this.WhenAnyValue(vm => vm.Feature).Select(f => f.ToChar()).ToProperty(this, x => x.FeatureText);
             this.WhenAnyValue(vm => vm.Feature).ObserveOn(RxApp.MainThreadScheduler).Subscribe(UpdateTitle);
-            this.WhenAnyValue(vm => vm.Correct).Skip(1).Subscribe((x) => UpdateResults((x)));
-            this.WhenAnyValue(vm => vm.Answer).Subscribe(async x => await OnAnswerChanged(x));
+            this.WhenAnyValue(vm => vm.Correct).Skip(1).Subscribe(UpdateResults);
+            this.WhenAnyValue(vm => vm.Answer).Select(OnAnswerChanged).Subscribe();
         }
-        public async Task LoadAsync(Feature process, Difficulty dif)
+        public async Task LoadAsync(SpeedMathConfig config)
         {
             if (_isLoaded) return;
             try
             {
+               // 
+
                 StartTime = DateTime.Now;
                 _isLoaded = true;
-                Feature = process;
-                Questions = new Queue<MathQuestion>(SpeedMathHelper.PopulateQuestions(process, SpeedMathHelper.GetLower(dif), SpeedMathHelper.GetUpper(dif)).GetRandomizedList());
+                Feature = config.Feature;
+                Difficulty = config.Difficulty;
+                Questions = new Queue<MathQuestion>(config.GetQuestionss());
                 QuestionsCount = Questions.Count;
-                Difficulty = dif;
                 Populate();
                 await PlayMusic();
             }

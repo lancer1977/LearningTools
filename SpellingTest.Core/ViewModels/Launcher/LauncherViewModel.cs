@@ -1,4 +1,6 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -20,11 +22,21 @@ namespace SpellingTest.Core.ViewModels.Launcher
             SaveNameCommand = ReactiveCommand.Create(() => settings.Name = Name);
             var command = ReactiveCommand.CreateFromTask(async () =>
            {
-               await requestor.RequestWebsite(@"schoolToolsDefinition://github.com/lancer1977/DataSeeds/blob/master/Definitions/life.json");
+               try
+               {
+                   //schoolToolsDefinition
+                   await requestor.RequestWebsite(
+                       @"https://github.com/lancer1977/DataSeeds/blob/master/Definitions/life.json");
 
 
-               var testEntry = await IOC.Get<IDictionaryService>().GetAsync("Test");
-               DefinitionText = testEntry;
+                   var testEntry = await IOC.Get<IDictionaryService>().GetAsync("Test");
+                   DefinitionText = testEntry;
+               }
+               catch (Exception ex)
+               {
+                   Debug.WriteLine(ex.Message);
+               }
+               
            });
             command.ObserveOn(RxApp.MainThreadScheduler);
             TestCommand = command;

@@ -13,8 +13,9 @@ namespace SpellingTest.Core.ViewModels.Math
         {
             StartCommand = ReactiveCommand.CreateFromTask(async () =>
             {
+                var config = new SpeedMathConfig(Question.ToInt(), Difficulty, Feature );
                 await nav.PopPopupAsync();
-                await nav.PushAsync<SpeedMathViewModel>(async x => await x.LoadAsync(Feature, Difficulty));
+                await nav.PushAsync<SpeedMathViewModel>(async x => await x.LoadAsync(config));
             });
             DifficultyOptions = EnumExtensions.EnumerateEnumType<Difficulty>().ToList();
             FeatureOptions = EnumExtensions.EnumerateEnumType<Feature>().ToList();

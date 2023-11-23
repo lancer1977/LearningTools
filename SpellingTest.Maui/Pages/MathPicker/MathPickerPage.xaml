@@ -11,11 +11,11 @@
                 <Label HorizontalTextAlignment="Center" TextColor="Black" FontAttributes="Bold"  Margin="0,15" Text="Math Rules" />
             </StackLayout>
             <Label Text="Feature" />
-            <Picker ItemsSource="{Binding FeatureOptions}" SelectedItem="{Binding Feature}" />
+            <Picker ItemsSource="{Binding FeatureOptions}" SelectedItem="{Binding Feature}" TextColor="Black" />
             <Label Text="Difficulty" />
-            <Picker ItemsSource="{Binding DifficultyOptions}" SelectedItem="{Binding Difficulty}" />
+            <Picker ItemsSource="{Binding DifficultyOptions}" SelectedItem="{Binding Difficulty}" TextColor="Black"/>
             <Label Text="Questions" />
-            <Picker ItemsSource="{Binding QuestionOptions}" SelectedItem="{Binding Question}" />
+            <Picker ItemsSource="{Binding QuestionOptions}" SelectedItem="{Binding Question}" TextColor="Black"/>
             <Button Text="Start" Command="{Binding StartCommand}" />
         </StackLayout>
     </Grid>

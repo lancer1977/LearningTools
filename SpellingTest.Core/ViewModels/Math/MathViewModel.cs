@@ -18,6 +18,7 @@ namespace SpellingTest.Core.ViewModels.Math
         private readonly IAudioService _audioService;
         private readonly IMainThreadDispatcher _mainThreadDispatcher;
         public ICommand AnswerCommand { get; }
+        public ICommand TestCommand { get; }
         public ObservableCollection<MathResult> Messages { get; } = new();
         [ObservableAsProperty] public char FeatureText { get; }
 
@@ -53,7 +54,11 @@ namespace SpellingTest.Core.ViewModels.Math
             // Feature = "+";
             var notBusy = this.WhenAnyValue(vm => vm.IsBusy).Select(busy => !busy);
             AnswerCommand = ReactiveCommand.CreateFromTask<int>(AnswerAction, notBusy).OnExecuting(x => IsBusy = x);
-             this.WhenAnyValue(vm => vm.Feature).Select(f => f.ToChar()).ToPropertyEx(this, x => x.FeatureText);
+            TestCommand = ReactiveCommand.CreateFromTask(async x =>
+            {
+
+            });
+            this.WhenAnyValue(vm => vm.Feature).Select(f => f.ToChar()).ToPropertyEx(this, x => x.FeatureText);
             this.WhenAnyValue(vm => vm.Feature).Subscribe(UpdateTitle);
             this.WhenAnyValue(vm => vm.Correct, vm => vm.Wrong).Subscribe((x) => UpdateResults((x.Item1, x.Item2)));
         }

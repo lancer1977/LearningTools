@@ -2,8 +2,7 @@
 <maui:InjectablePageBase x:TypeArguments="math:MathViewModel" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="using:SpellingTest.Maui.Controls"
-                          xmlns:maui="clr-namespace:SpellingTest.Maui"
-                          xmlns:spelling="clr-namespace:SpellingTest.Maui.Pages.Spelling"
+                          xmlns:maui="clr-namespace:SpellingTest.Maui" 
                           xmlns:math="clr-namespace:SpellingTest.Core.ViewModels.Math;assembly=SpellingTest.Core"
                           x:Class="SpellingTest.Maui.Pages.Math.MathPage">
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="1*,2*">        

@@ -4,6 +4,7 @@ using PolyhydraGames.Learning.RestAsync;
 using PolyhydraGames.Learning.RestAsync.Services;
 using SpellingTest.Core.Service;
 using SpellingTest.Core.ViewModels.Quiz;
+using ITextToSpeech = Microsoft.Maui.Media.ITextToSpeech;
 
 namespace SpellingTest.Maui.Setup;
 
@@ -14,13 +15,15 @@ public static class RestfulSetup
         var webApiAddress = "https://api.polyhydragames.com/learning";
         builder.Services.AddSingleton<LearningEndpointFactory>(x => new LearningEndpointFactory(webApiAddress));
         builder.Services.AddSingleton<ILearningFactory>(x => x.GetRequiredService<LearningEndpointFactory>());
-        builder.Services.AddSingleton<IEndpointFactory>(x => x.GetRequiredService<LearningEndpointFactory>()); 
+        builder.Services.AddSingleton<IEndpointFactory>(x => x.GetRequiredService<LearningEndpointFactory>());
         builder.Services.AddSingleton<IQuizService, QuizService>(); 
         builder.Services.AddSingleton<IAudioService, AudioService>();
         builder.Services.AddSingleton<IMathScoreService,SpeedMathService>();
         builder.Services.AddSingleton<ISettings, SettingService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<ISpellingNavigatorService, SpellingTestNavigatorService>();
+        builder.Services.AddSingleton<IBrowser>(x => Browser.Default);
+        builder.Services.AddSingleton<ITextToSpeech>(x => TextToSpeech.Default); 
         return builder;
     }
 }

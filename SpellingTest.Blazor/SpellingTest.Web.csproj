@@ -26,14 +26,13 @@
     <PackageReference Include="PolyhydraGames.Core.Data" Version="1.0.2.12" />
     <PackageReference Include="PolyhydraGames.Data.Dapper" Version="1.1.1.35" />
     <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.28" />
-    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.6" />
+    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.8" />
     <PackageReference Include="PolyhydraGames.SignalR.Models" Version="1.0.0.6" />
     <PackageReference Include="PolyhydraGames.SignalR.Service" Version="1.0.2.8" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="ReactiveUI.Blazor" Version="19.5.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Syncfusion.Blazor" Version="23.1.40" />
     <PackageReference Include="Markdig" Version="0.33.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />

@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.2.2" />
-    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.55" />
+    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.60" />
     <PackageReference Include="ReactiveUI.Maui" Version="19.5.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
   </ItemGroup>
@@ -111,6 +111,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Pages\Spelling\QuizListPickerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Resources\Styles\controls.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Resources\Styles\converters.xaml">

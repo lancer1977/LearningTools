@@ -13,7 +13,7 @@ namespace SpellingTest.Maui
         {
             var assembly = typeof(MauiProgram).Assembly;
             var builder = MauiApp.CreateBuilder();
-            var viewAssemblies = new[] { assembly, typeof(QuizListPickerViewModel).Assembly, typeof(PolyhydraGames.Core.Maui.DeviceModule).Assembly};
+            var viewAssemblies = new[] { assembly, typeof(QuizListPickerViewModel).Assembly, typeof(DeviceModule).Assembly};
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit() 
