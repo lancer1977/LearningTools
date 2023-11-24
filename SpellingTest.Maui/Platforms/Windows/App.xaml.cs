@@ -18,6 +18,7 @@ namespace SpellingTest.Maui.WinUI
         {
             this.InitializeComponent();
             CrossMediaManager.Current.Init();
+            WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation();
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

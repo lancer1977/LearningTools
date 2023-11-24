@@ -2,8 +2,8 @@
 using System.IO;
 using System.Reflection;
 
-namespace SpellingTest.Core
-{
+namespace SpellingTest.Core;
+
     public static class ResourceReader{
 
         public  static Assembly MyAssembly=> typeof(ResourceReader).GetTypeInfo().Assembly; 
@@ -22,4 +22,3 @@ namespace SpellingTest.Core
             return text;
         }
     }
-}

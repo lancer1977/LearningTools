@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Maui;
+using IdentityModel.OidcClient;
 using Microsoft.Extensions.Logging;
 using Mopups.Hosting; 
 using PolyhydraGames.Core.Maui.Setup;
+using SpellingTest.Core;
 using SpellingTest.Core.ViewModels.Quiz;
 using SpellingTest.Maui.Setup;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace SpellingTest.Maui
 {
@@ -30,9 +33,18 @@ namespace SpellingTest.Maui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+      
+            builder.Services.AddSingleton(x=> new OidcClient(new OidcClientOptions()
+            {
+                Authority = "https://identity.polyhydragames.com",
+                ClientId = Constants.ClientId,
+                Scope = Constants.Scope,
+                RedirectUri = Constants.RedirectUri,
+                Browser = x.GetRequiredService<IBrowser>()
 
+            }));
 #if DEBUG
-		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             var build =  builder.Build();

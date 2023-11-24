@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿ <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
@@ -21,6 +21,7 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <DefaultLanguage>en</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
@@ -71,6 +72,11 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
   </ItemGroup>
+	 <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.22621.0'">
+		 <PackageReference Include="WinUIEx">
+			 <Version>2.3.3</Version>
+		 </PackageReference>
+	 </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.2.2" />
     <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.60" />
@@ -89,6 +95,9 @@
     </Compile>
     <Compile Update="Pages\Spelling\QuizListPickerPage.xaml.cs">
       <DependentUpon>QuizListPickerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Platforms\iOS\MauiAuthenticationBrowser.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -123,4 +132,5 @@
   <ItemGroup>
     <PackageReference Update="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
   </ItemGroup>
+
 </Project>

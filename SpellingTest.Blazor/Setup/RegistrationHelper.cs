@@ -29,7 +29,6 @@ public static class ApiRegistrationHelper
         builder.Services.AddScoped<ISettings, SettingsFake>();
         builder.Services.AddScoped<ISettingsService, SettingsService>();
         builder.Services.AddScoped<IHttpService, HttpFinder>();
-        builder.Services.AddScoped<ITextToSpeech, TextToSpeechFake>();
         builder.Services.AddScoped<IDialogService, DialogService>();
         builder.Services.AddScoped<DialogService>();
 

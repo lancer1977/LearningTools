@@ -9,6 +9,19 @@
 		<integer>1</integer>
 		<integer>2</integer>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Learning Tools</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>learningtools</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>

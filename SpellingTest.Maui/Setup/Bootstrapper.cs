@@ -4,7 +4,7 @@ using PolyhydraGames.Learning.RestAsync;
 using PolyhydraGames.Learning.RestAsync.Services;
 using SpellingTest.Core.Service;
 using SpellingTest.Core.ViewModels.Quiz;
-using ITextToSpeech = Microsoft.Maui.Media.ITextToSpeech;
+using SpellingTest.Maui;
 
 namespace SpellingTest.Maui.Setup;
 
@@ -23,7 +23,11 @@ public static class RestfulSetup
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<ISpellingNavigatorService, SpellingTestNavigatorService>();
         builder.Services.AddSingleton<IBrowser>(x => Browser.Default);
-        builder.Services.AddSingleton<ITextToSpeech>(x => TextToSpeech.Default); 
+        builder.Services.AddSingleton<ITextToSpeech>(x => TextToSpeech.Default);
+        builder.Services.AddSingleton<IdentityModel.OidcClient.Browser.IBrowser, MauiAuthenticationBrowser>();
+        builder.Services.AddSingleton<IAuthenticationClient,AuthenticationService>();
+
+
         return builder;
     }
 }

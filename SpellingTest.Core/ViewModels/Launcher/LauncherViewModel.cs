@@ -12,25 +12,27 @@ namespace SpellingTest.Core.ViewModels.Launcher
 
     public class LauncherViewModel : ViewModelAsyncBase
     {
+        private readonly IAuthenticationClient _authClient;
         [Reactive] public string Name { get; set; }
         [Reactive] public string DefinitionText { get; set; }
         public ICommand SaveNameCommand { get; }
         public ICommand TestCommand { get; }
 
-        public LauncherViewModel(ISettingsService settings, IWebsiteRequestor requestor)
+        public LauncherViewModel(ISettingsService settings, IWebsiteRequestor requestor, IAuthenticationClient authClient)
         {
+            _authClient = authClient;
             SaveNameCommand = ReactiveCommand.Create(() => settings.Name = Name);
             var command = ReactiveCommand.CreateFromTask(async () =>
            {
                try
                {
                    //schoolToolsDefinition
-                   await requestor.RequestWebsite(
-                       @"https://github.com/lancer1977/DataSeeds/blob/master/Definitions/life.json");
+                   await _authClient.LoginAsync();
+                   var token = _authClient.AuthenticationToken;
 
-
-                   var testEntry = await IOC.Get<IDictionaryService>().GetAsync("Test");
-                   DefinitionText = testEntry;
+                   //await requestor.RequestWebsite(@"https://github.com/lancer1977/DataSeeds/blob/master/Definitions/life.json");
+                   //var testEntry = await IOC.Get<IDictionaryService>().GetAsync("Test");
+                   DefinitionText = token;
                }
                catch (Exception ex)
                {
