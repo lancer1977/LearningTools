@@ -6,40 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using SpellingTest.Core.Interfaces;
 
 namespace SpellingTest.Core.ViewModels.Quiz
 {
-    public interface ISpellingNavigatorService
-    {
-        Task NavigateTo(string path);
-        Task ShowQuiz(ITopic topic);
-        Task ShowFlashCard(ITopic topic);
-    }
-    public class SpellingTestNavigatorService : ISpellingNavigatorService
-    {
-        private readonly INavigatorAsync _navigator;
-
-        public SpellingTestNavigatorService(INavigatorAsync navigator)
-        {
-            _navigator = navigator;
-        }
-
-        public async Task NavigateTo(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task ShowQuiz(ITopic topic)
-        {
-            await _navigator.PushAsync<QuizViewModel>(i => i.LoadAsync(topic.Id.Value));
-
-        }
-
-        public async Task ShowFlashCard(ITopic topic)
-        {
-            await _navigator.PushAsync<FlashCardViewModel>(i => i.LoadAsync(topic.Id.Value));
-        }
-    }
     public class QuizListPickerViewModel : ViewModelAsyncBase
     {
         public ICommand TestCommand { get; }

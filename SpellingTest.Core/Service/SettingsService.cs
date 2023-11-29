@@ -1,4 +1,5 @@
 ﻿using PolyhydraGames.Core.Global.Settings;
+using SpellingTest.Core.Interfaces;
 
 namespace SpellingTest.Core.Service;
 

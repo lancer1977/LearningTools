@@ -41,6 +41,7 @@ namespace SpellingTest.Maui
                 Scope = Constants.Scope,
                 RedirectUri = Constants.RedirectUri,
                 Browser = x.GetRequiredService<IBrowser>()
+                
 
             }));
 #if DEBUG

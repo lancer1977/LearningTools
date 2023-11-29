@@ -7,7 +7,7 @@ using PolyhydraGames.Extensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SpellingTest.Core.Helpers;
-using SpellingTest.Core.Service;
+using SpellingTest.Core.Interfaces;
 
 namespace SpellingTest.Core.ViewModels.Math
 {

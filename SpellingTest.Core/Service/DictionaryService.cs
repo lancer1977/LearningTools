@@ -13,21 +13,20 @@ namespace SpellingTest.Core.Service
         public DictionaryService(MerriamWebsterSearch search)
         {
             _search = search;
-            var dict = new MerriamWebster.NET.MerriamWebsterConfig()
-            {
-                ApiKey = _key
-            };
+            //var dict = new MerriamWebster.NET.MerriamWebsterConfig()
+            //{
+            //    ApiKey = Constants.WebsterKey
+            //};
             //var loggerFactory = new LoggerFactory();
             //var client = new MerriamWebster.NET.MerriamWebsterClient(service.CreateHttp(), dict,
             //    new Logger<MerriamWebsterClient>(loggerFactory));
             
 
-        }
-        private static string _key = "0e9bba1f-ebc9-4978-b838-c4e58cefac20";
+        } 
 
         public async Task<string> GetAsync(string word)
         {
-            var result = await _search.Search(_key, word);
+            var result = await _search.Search(Constants.WebsterKey, word);
             return result.Entries.FirstOrDefault().ShortDefs.ToCodedArray(Environment.NewLine);
         }
 

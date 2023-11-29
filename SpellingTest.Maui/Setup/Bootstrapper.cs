@@ -1,10 +1,14 @@
-﻿using PolyhydraGames.Core.Maui.Services;
+﻿using IdentityModel.OidcClient;
+using PolyhydraGames.Core.Maui.Services;
 using PolyhydraGames.Learning.Interfaces;
 using PolyhydraGames.Learning.RestAsync;
 using PolyhydraGames.Learning.RestAsync.Services;
+using SpellingTest.Core;
+using SpellingTest.Core.Interfaces;
 using SpellingTest.Core.Service;
 using SpellingTest.Core.ViewModels.Quiz;
 using SpellingTest.Maui;
+using IPolyhydraToken = PolyhydraGames.Core.Interfaces.IPolyhydraToken;
 
 namespace SpellingTest.Maui.Setup;
 
@@ -12,8 +16,8 @@ public static class RestfulSetup
 {
     public static MauiAppBuilder RegisterRestful(this MauiAppBuilder builder)
     {
-        var webApiAddress = "https://api.polyhydragames.com/learning";
-        builder.Services.AddSingleton<LearningEndpointFactory>(x => new LearningEndpointFactory(webApiAddress));
+ 
+        builder.Services.AddSingleton(x => new LearningEndpointFactory(Constants.WebApiAddress));
         builder.Services.AddSingleton<ILearningFactory>(x => x.GetRequiredService<LearningEndpointFactory>());
         builder.Services.AddSingleton<IEndpointFactory>(x => x.GetRequiredService<LearningEndpointFactory>());
         builder.Services.AddSingleton<IQuizService, QuizService>(); 
@@ -25,7 +29,8 @@ public static class RestfulSetup
         builder.Services.AddSingleton<IBrowser>(x => Browser.Default);
         builder.Services.AddSingleton<ITextToSpeech>(x => TextToSpeech.Default);
         builder.Services.AddSingleton<IdentityModel.OidcClient.Browser.IBrowser, MauiAuthenticationBrowser>();
-        builder.Services.AddSingleton<IAuthenticationClient,AuthenticationService>();
+        builder.Services.AddSingleton<AuthenticationService>(); 
+        builder.Services.AddSingleton<IAuthenticationClient>(x => x.GetRequiredService<AuthenticationService>());
 
 
         return builder;

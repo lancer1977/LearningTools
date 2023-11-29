@@ -1,33 +1,18 @@
-﻿using IdentityModel.Client;
-using IdentityModel.OidcClient.Browser;
-using PolyhydraGames.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.OidcClient;
+using SpellingTest.Core.Interfaces;
 
 namespace SpellingTest.Core.Service;
 
-public class AuthenticationService : IAuthenticationClient
+public class AuthenticationService(OidcClient client, IPolyhydraToken tokenService) : IAuthenticationClient
 {
-    public string AuthenticationToken { get; private set; }
-    public AuthenticationService(OidcClient client)
-    {
-        _client = client;
-    }
-    private readonly OidcClient _client;
-
     public async Task LoginAsync()
     {
-        var result = await _client.LoginAsync();
+        var result = await client.LoginAsync();
 
-
-
-        AuthenticationToken = result.AccessToken;
+        tokenService.Token = result.AccessToken;
         if (result.IsError)
         {
             Debug.WriteLine(result.Error);
@@ -49,9 +34,9 @@ public class AuthenticationService : IAuthenticationClient
             sb.AppendLine();
             sb.AppendLine("access token:");
             sb.AppendLine(result.AccessToken);
-        }
-        Debug.WriteLine(sb.ToString());
-        
-    }
+        } 
 
+        Debug.WriteLine(sb.ToString());
+
+    } 
 }

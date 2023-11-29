@@ -1,6 +1,6 @@
 ﻿ <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
+    <TargetFrameworks>net8.0;net8.0-ios;net8.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -79,7 +79,7 @@
 	 </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.2.2" />
-    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.60" />
+    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.61" />
     <PackageReference Include="ReactiveUI.Maui" Version="19.5.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
   </ItemGroup>
