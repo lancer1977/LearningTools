@@ -11,4 +11,4 @@ public static class RestSetup
         builder.Services.AddScoped<IEndpointFactory>(x => x.GetRequiredService<LearningEndpointFactory>());
         return builder;
     }
-} 
+}

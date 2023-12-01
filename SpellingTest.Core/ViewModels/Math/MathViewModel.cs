@@ -1,14 +1,14 @@
-﻿using System;
+﻿using PolyhydraGames.Core.Global.Properties;
+using PolyhydraGames.Extensions;
+using PolyhydraGames.Extensions.Dice;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using PolyhydraGames.Core.Global.Properties;
-using PolyhydraGames.Extensions;
-using PolyhydraGames.Extensions.Dice;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace SpellingTest.Core.ViewModels.Math
 {
@@ -97,7 +97,7 @@ namespace SpellingTest.Core.ViewModels.Math
 
         public override async Task OnAppearingAsync()
         {
-            await base.OnAppearingAsync();  
+            await base.OnAppearingAsync();
             await LoadAsync(Feature.Add, -1, Difficulty.Easy);
         }
         private int _answered;
@@ -255,7 +255,7 @@ namespace SpellingTest.Core.ViewModels.Math
                     break;
             }
         }
-         
+
         public async Task LoadAsync(Feature process, int questions, Difficulty dif)
         {
             if (_isLoaded) return;

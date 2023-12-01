@@ -1,5 +1,3 @@
-using PolyhydraGames.Core.Interfaces;
-
 namespace SpellingTest.Wasm.Services.Fakes;
 
 public class MainThreadDispatcher : IMainThreadDispatcher

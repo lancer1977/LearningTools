@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using IdentityModel.Client;
+﻿using IdentityModel.Client;
 using IdentityModel.OidcClient.Browser;
 using SpellingTest.Core;
+using System.Diagnostics;
 
 namespace SpellingTest.Maui;
 
@@ -41,7 +41,7 @@ public class MauiAuthenticationBrowser : IdentityModel.OidcClient.Browser.IBrows
             };
         }
     }
-    
+
 
 
     public string ToRawIdentityUrl(string redirectUrl, WebAuthenticatorResult result)

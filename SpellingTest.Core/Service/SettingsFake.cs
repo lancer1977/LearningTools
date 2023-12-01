@@ -3,19 +3,19 @@
 public class SettingsFake : ISettings
 {
     public void AddOrUpdateValue(string key, bool value)
-    { 
+    {
     }
 
     public void AddOrUpdateValue(string key, int value)
-    { 
+    {
     }
 
     public void AddOrUpdateValue(string key, string value)
-    { 
+    {
     }
 
     public void AddOrUpdateValue(string key, double value)
-    { 
+    {
     }
 
     public double GetValueOrDefault(string key, double defaultValue)

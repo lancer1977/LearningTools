@@ -1,12 +1,11 @@
-﻿using PolyhydraGames.Core.Maui.Controls;
-using ReactiveUI;
+﻿using ReactiveUI;
 using SpellingTest.Core.ViewModels.Quiz;
 
 namespace SpellingTest.Maui.Pages.FlashCards
 {
     public partial class FlashCardPage
     {
-        public FlashCardPage() 
+        public FlashCardPage()
         {
             InitializeComponent();
         }

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using SpellingTest.Core.Interfaces;
+using System;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using SpellingTest.Core.Interfaces;
+using PolyhydraGames.Core.Identity;
 
 namespace SpellingTest.Core.ViewModels.Launcher
 {
@@ -13,25 +14,25 @@ namespace SpellingTest.Core.ViewModels.Launcher
     {
         private readonly IAuthenticationClient _authClient;
         private readonly IQuizService _service;
-        [Reactive] public string Name { get; set; }
-        [Reactive] public string DefinitionText { get; set; }
-        public ICommand SaveNameCommand { get; }
+        [Reactive] public string Name { get; set; } = "...";
+        [Reactive] public string DefinitionText { get; set; } 
         public ICommand TestCommand { get; }
 
         public LauncherViewModel(ISettingsService settings, IWebsiteRequestor requestor, IAuthenticationClient authClient, IQuizService service)
         {
             _authClient = authClient;
-            _service = service;
-            SaveNameCommand = ReactiveCommand.Create(() => settings.Name = Name);
+            _service = service; 
             var command = ReactiveCommand.CreateFromTask(async () =>
            {
                try
                {
                    await _authClient.LoginAsync();
+                   Name = _authClient.Claims.LastCFirst;
                    var result = await _service.GetFavorites();
-                   foreach (var VARIABLE in result)
-                   { 
-                       Debug.WriteLine(VARIABLE.Name);
+
+                   foreach (var claim in result)
+                   {
+                       Debug.WriteLine(claim.Name);
                    }
 
 
@@ -43,8 +44,7 @@ namespace SpellingTest.Core.ViewModels.Launcher
 
            });
             command.ObserveOn(RxApp.MainThreadScheduler);
-            TestCommand = command;
-            Name = settings.Name;
+            TestCommand = command; 
 
         }
 

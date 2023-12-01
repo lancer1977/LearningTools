@@ -1,17 +1,16 @@
 ﻿
-using System.Diagnostics;
 using IdentityModel.OidcClient.Browser;
-using Splat.ModeDetection;
+using System.Diagnostics;
 
 namespace SpellingTest.Maui;
 
 public class MauiAuthenticationBrowser : IdentityModel.OidcClient.Browser.IBrowser
-{ 
+{
     public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = default)
     {
         try
         {
-            
+
             var authResult = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl),
                 new Uri(options.EndUrl));
 

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using Dapper;
+using PolyhydraGames.Data.Dapper;
+using System.Collections;
 using System.Data;
 using System.Runtime.CompilerServices;
-using Dapper;
-using PolyhydraGames.Data.Dapper;
 
 namespace SpellingTest.Web.Services;
 

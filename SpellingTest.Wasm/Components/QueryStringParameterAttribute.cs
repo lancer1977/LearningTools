@@ -1,8 +1,8 @@
-using System.Globalization;
-using System.Reflection;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
+using System.Globalization;
+using System.Reflection;
 
 namespace SpellingTest.Wasm.Components;
 
@@ -101,7 +101,7 @@ public static class QueryStringParameterExtensions
         {
             return Convert.ChangeType(value[0], type, CultureInfo.InvariantCulture);
         }
-        
+
     }
 
     private static string ConvertToString(object value)

@@ -1,5 +1,5 @@
-﻿using System.Runtime.Serialization;
-using ReactiveUI.Fody.Helpers;
+﻿using ReactiveUI.Fody.Helpers;
+using System.Runtime.Serialization;
 
 namespace SpellingTest.Core.ViewModels.CardGame
 {
@@ -14,15 +14,15 @@ namespace SpellingTest.Core.ViewModels.CardGame
             ShowName = true;
             ShowImage = true;
         }
-        public Card(IDefinition def):this()
+        public Card(IDefinition def) : this()
         {
             Image = def.Image;
             Name = def.Name;
         }
- 
-        [DataMember(Name="Image")]
+
+        [DataMember(Name = "Image")]
         public string Image { get; set; }
-        [DataMember(Name="Name")]
+        [DataMember(Name = "Name")]
         public string Name { get; set; }
         public int Id { get; set; }
         [Reactive] public bool ShowName { get; set; }

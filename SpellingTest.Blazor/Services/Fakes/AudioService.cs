@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System;
 
 namespace SpellingTest.Web.Services.Fakes;
 
@@ -11,7 +10,7 @@ public class AudioServiceFake : IAudioService
     {
         _runtime = runtime;
     }
-    
+
     public async Task PlaySound(string uri)
     {
         await _runtime.InvokeVoidAsync("PlayAudioFile", $"/sounds/{uri}.mp3");
@@ -19,7 +18,7 @@ public class AudioServiceFake : IAudioService
 
     public async Task PlayMusic(string title, bool loop = true)
     {
-       // await _runtime.InvokeVoidAsync("PlayAudioFile", $"/sounds/{title}.mp3");
+        // await _runtime.InvokeVoidAsync("PlayAudioFile", $"/sounds/{title}.mp3");
     }
 
     public async Task StopMusic()

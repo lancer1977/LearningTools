@@ -1,5 +1,4 @@
 ﻿using PolyhydraGames.Extensions;
-using SpellingTest.Core.ViewModels.Quiz;
 
 namespace SpellingTest.Web.Setup
 {

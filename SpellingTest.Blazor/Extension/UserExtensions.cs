@@ -1,5 +1,5 @@
-using System.Data;
 using Dapper.Contrib.Extensions;
+using System.Data;
 
 namespace SpellingTest.Web.Extension;
 

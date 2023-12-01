@@ -1,6 +1,6 @@
 ﻿namespace SpellingTest.Web.Models;
 
-public class Selection<T> 
+public class Selection<T>
 {
     private string _title;
     public T Value { get; set; }
@@ -16,11 +16,11 @@ public class Selection<T>
 
     }
 
-    public Selection(T value) : this(value,value.ToString())
+    public Selection(T value) : this(value, value.ToString())
     {
     }
 
-    public Selection(T value,string title)
+    public Selection(T value, string title)
     {
         Value = value;
         Title = title;

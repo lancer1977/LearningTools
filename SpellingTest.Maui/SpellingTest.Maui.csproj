@@ -110,6 +110,9 @@
     <MauiXaml Update="Pages\Menu\MenuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Pages\SearchTopics\SearchTopicsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Pages\Spelling\QuizPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

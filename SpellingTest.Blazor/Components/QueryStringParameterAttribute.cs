@@ -1,7 +1,7 @@
-using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
+using System.Globalization;
 
 namespace SpellingTest.Web.Components;
 
@@ -100,7 +100,7 @@ public static class QueryStringParameterExtensions
         {
             return Convert.ChangeType(value[0], type, CultureInfo.InvariantCulture);
         }
-        
+
     }
 
     private static string ConvertToString(object value)

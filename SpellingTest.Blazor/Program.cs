@@ -1,5 +1,5 @@
-using PolyhydraGames.BlazorComponents; 
-using SpellingTest.Web.Setup; 
+using PolyhydraGames.BlazorComponents;
+using SpellingTest.Web.Setup;
 
 //builder.Configuration.AddJsonFile("configs/secret.json", false, reloadOnChange: true).Build();
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +9,9 @@ builder.AddCors();
 builder.Services.AddBlazorise();
 builder.Services.AddBlazorComponents();
 builder.Services.AddSignalR();
-builder.Services.AddServerSideBlazor(); 
+builder.Services.AddServerSideBlazor();
 builder.Services.AddApplicationInsightsTelemetry();
-builder.Services.AddHttpClient(); 
+builder.Services.AddHttpClient();
 builder.AddOIDC();
 builder.AddMiscServices();
 builder.RegisterRest();
@@ -21,7 +21,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{ 
+{
     app.UseCors("AllowAllOrigins");
 }
 else
@@ -33,11 +33,11 @@ else
 
 app.UseHttpsRedirection();//Enforces HTTPS
 app.UseStaticFiles(); // Allows serving static html/js
-app.UseRouting(); 
-app.UseAuthentication(); 
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers(); // Maps all the controllers.
-app.MapBlazorHub(); 
+app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 app.Run();

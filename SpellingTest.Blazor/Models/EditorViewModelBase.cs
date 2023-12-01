@@ -1,6 +1,6 @@
-﻿using System.Windows.Input;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using ReactiveUI;
+using System.Windows.Input;
 
 namespace SpellingTest.Web.Models;
 

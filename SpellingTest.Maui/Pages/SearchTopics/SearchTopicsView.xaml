@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<maui:InjectablePageBase x:TypeArguments="scores:SearchTopicsViewModel" 
+                         xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:maui="clr-namespace:SpellingTest.Maui" 
+                         xmlns:scores="clr-namespace:SpellingTest.Core.ViewModels.SearchTopics;assembly=SpellingTest.Core"
+                         Title="Search"
+                         x:Class="SpellingTest.Maui.Pages.SearchTopics.SearchTopicsPage">
+    <StackLayout>
+        <FlexLayout JustifyContent="Start"  Wrap="Wrap"  >
+            <Editor Text="{Binding Description}" Placeholder="Description" />
+            <Editor Text="{Binding MaxCount}" Placeholder="Count" WidthRequest="65" MaximumWidthRequest="65" />
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" >
+                    <Label Text="Include Non Favorites" VerticalTextAlignment="Center" />
+                    <CheckBox IsChecked="{Binding IncludeNonFavorites}"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" >
+                    <Label Text="Include Favorites" VerticalTextAlignment="Center"/>
+                    <CheckBox IsChecked="{Binding IncludeFavorites}" />
+                </StackLayout>
+            </StackLayout>
+
+        </FlexLayout>
+        <CollectionView ItemsSource="{Binding Items}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Red">
+                        <Grid RowDefinitions="Auto,Auto"  Margin="5">
+                            <StackLayout Grid.Row="0" Orientation="Horizontal" >
+
+                                <Label Text="{Binding Name, StringFormat='Student: {0}'}" TextColor="Red"  />
+                                <Label Text="{Binding Description}" HorizontalOptions="EndAndExpand"/>
+                                <Image Source="favorite.png" IsVisible="{Binding IsFavorite}" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+</maui:InjectablePageBase>

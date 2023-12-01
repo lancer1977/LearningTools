@@ -1,10 +1,6 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using PolyhydraGames.Core.Interfaces;
+﻿namespace SpellingTest.Wasm.OwnerMiddleware;
 
-namespace SpellingTest.Wasm.OwnerMiddleware;
-
-public   class OwnerMiddleware
+public class OwnerMiddleware
 {
     //private readonly RequestDelegate _next;
 

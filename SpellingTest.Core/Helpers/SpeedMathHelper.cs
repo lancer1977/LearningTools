@@ -1,7 +1,7 @@
+using SpellingTest.Core.ViewModels.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpellingTest.Core.ViewModels.Math;
 
 namespace SpellingTest.Core.Helpers;
 

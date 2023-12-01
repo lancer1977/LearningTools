@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using PolyhydraGames.Extensions;
+using System.Diagnostics;
 using System.Reflection;
-using PolyhydraGames.Extensions;
 
 namespace SpellingTest.Wasm.Extension
 {

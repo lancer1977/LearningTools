@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using Microsoft.Maui.Graphics.Converters;
+﻿using Microsoft.Maui.Graphics.Converters;
+using System.Globalization;
 
 namespace SpellingTest.Maui;
 

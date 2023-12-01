@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using IdentityModel.OidcClient;
 using Microsoft.Extensions.Logging;
-using Mopups.Hosting; 
+using Mopups.Hosting;
 using PolyhydraGames.Core.Maui.Setup;
 using SpellingTest.Core;
 using SpellingTest.Core.ViewModels.Quiz;
@@ -16,16 +16,16 @@ namespace SpellingTest.Maui
         {
             var assembly = typeof(MauiProgram).Assembly;
             var builder = MauiApp.CreateBuilder();
-            var viewAssemblies = new[] { assembly, typeof(QuizListPickerViewModel).Assembly, typeof(DeviceModule).Assembly};
+            var viewAssemblies = new[] { assembly, typeof(QuizListPickerViewModel).Assembly, typeof(DeviceModule).Assembly };
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit() 
+                .UseMauiCommunityToolkit()
                 .RegisterPlatformServices()
                 //.RegisterTypes(PathfinderRulesBootstrapper.GetRegistrationTypes())
-                .RegisterIOC() 
+                .RegisterIOC()
                 .RegisterMauiCoreServices()
                 .ConfigureMopups()
-                .RegisterViewModelsAndPages(viewAssemblies) 
+                .RegisterViewModelsAndPages(viewAssemblies)
                 .UseMauiCommunityToolkit()
                 .RegisterRestful()
                 .ConfigureFonts(fonts =>
@@ -33,24 +33,25 @@ namespace SpellingTest.Maui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-      
-            builder.Services.AddSingleton(x=> new OidcClient(new OidcClientOptions()
+
+            builder.Services.AddSingleton(x => new OidcClient(new OidcClientOptions()
             {
                 Authority = "https://identity.polyhydragames.com",
                 ClientId = Constants.ClientId,
                 Scope = Constants.Scope,
+                
                 RedirectUri = Constants.RedirectUri,
                 Browser = x.GetRequiredService<IBrowser>()
-                
+
 
             }));
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
 
-            var build =  builder.Build();
+            var build = builder.Build();
 
-            build.Services.GetRequiredService<IIOCContainer>(); 
+            build.Services.GetRequiredService<IIOCContainer>();
             ViewModelModule.ViewFactoryRegistration(viewAssemblies);
             return build;
         }

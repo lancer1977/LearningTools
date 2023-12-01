@@ -5,29 +5,71 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SpellingTest.Core.ViewModels.Quiz
+namespace SpellingTest.Core.ViewModels.SearchTopics
 {
-    public class QuizListPickerViewModel : ViewModelAsyncBase
+    public class SearchTopicsViewModel : ViewModelAsyncBase
     {
         public ICommand TestCommand { get; }
-        public ICommand ActionPickCommand { get; }
+        public ICommand SearchCommand { get; }
+
         private readonly ISpellingNavigatorService _navigator;
         private readonly IDialogService _displayService;
         private readonly IQuizService _quizService;
 
         [Reactive] public List<ITopic> Items { get; set; }
         public Guid? SelectedTopic { get; set; }
+        private TopicSearch Query => new TopicSearch
+        {
+            Description = Description,
+            IncludeFavorites = IncludeFavorites,
+            IncludeNonFavorites = IncludeNonFavorites,
+            MaxCount = MaxCount,
+            Name = Name
+        };
 
-        public QuizListPickerViewModel(ISpellingNavigatorService navigator, IDialogService displayService, IQuizService quizService)
+        [Reactive] public string Name { get; set; }
+
+        [Reactive] public int? MaxCount { get; set; }
+
+        [Reactive] public bool? IncludeNonFavorites { get; set; }
+
+        [Reactive] public bool? IncludeFavorites { get; set; }
+
+        [Reactive] public string Description { get; set; }
+
+        public SearchTopicsViewModel(ISpellingNavigatorService navigator, IDialogService displayService, IQuizService quizService)
         {
             _navigator = navigator;
             _displayService = displayService;
             _quizService = quizService;
-            ActionPickCommand = ReactiveCommand.CreateFromTask<ITopic>(async x => await ItemSelected(x)).OnException();
             TestCommand = ReactiveCommand.CreateFromTask<ITopic>(async x => await _navigator.ShowQuiz(x)).OnException();
+            SearchCommand = ReactiveCommand.CreateFromTask(async () => await quizService.SearchTopic(Query));
+            this.WhenAnyValue(
+                x => x.Description,
+                x => x.MaxCount,
+                x => x.IncludeFavorites,
+            x => x.IncludeNonFavorites,
+                (des, count, favs, nofavs) => new TopicSearch
+                {
+                    Description = des,
+                    MaxCount = count,
+                    IncludeFavorites = favs,
+                    IncludeNonFavorites = nofavs,
+
+                })
+                .Select(async x =>
+            {
+
+                Items?.Clear();
+                var response = await quizService.SearchTopic(x);
+                Items = response.ToList();
+
+            }).Subscribe();
+
         }
 
 

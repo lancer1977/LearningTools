@@ -1,6 +1,5 @@
-﻿using System.Reflection;
-using PolyhydraGames.Extensions;
-using SpellingTest.Core.ViewModels.Quiz;
+﻿using PolyhydraGames.Extensions;
+using System.Reflection;
 
 namespace SpellingTest.Wasm.Setup
 {

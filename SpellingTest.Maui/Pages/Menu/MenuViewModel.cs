@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using PolyhydraGames.Core.IOC;
+﻿using PolyhydraGames.Core.IOC;
 using PolyhydraGames.Core.Maui.Interfaces;
 using PolyhydraGames.Core.ReactiveUI;
 using PolyhydraGames.Learning.Dtos;
@@ -9,6 +8,8 @@ using SpellingTest.Core.ViewModels.Launcher;
 using SpellingTest.Core.ViewModels.Math;
 using SpellingTest.Core.ViewModels.Quiz;
 using SpellingTest.Core.ViewModels.Scores;
+using SpellingTest.Core.ViewModels.SearchTopics;
+using System.Diagnostics;
 using MenuItem = PolyhydraGames.Core.ReactiveUI.MenuItem;
 namespace SpellingTest.Maui.Pages.Menu
 {
@@ -23,28 +24,30 @@ namespace SpellingTest.Maui.Pages.Menu
             }
         }
 
-        private readonly INavigatorAsync _nav; 
+        private readonly INavigatorAsync _nav;
         private readonly IMathScoreService _result;
 
         public MenuViewModel(INavigatorAsync nav, IApp app, IMathScoreService result)
         {
-            MenuItem.Initialize(nav,IOC.Get<IMenuControl>(),IOC.Get<IMainThreadDispatcher>());
+            MenuItem.Initialize(nav, IOC.Get<IMenuControl>(), IOC.Get<IMainThreadDispatcher>());
             _nav = nav;
             _app = app;
             _result = result;
 
-            MathMenuItem =  new  MenuItem("Math Quiz", OnCreation);
+            MathMenuItem = new MenuItem("Math Quiz", OnCreation);
             SpellingListMenuItem = MenuItem.Create<QuizListPickerViewModel>("Spelling List");
-            CardGameMenuItem = MenuItem.Create<CardGameViewModel>("Card Game",async x=> await x.LoadAsync(Guid.Parse( "91F9423E-F36B-1410-8F2B-00F968453034")));
+            CardGameMenuItem = MenuItem.Create<CardGameViewModel>("Card Game", async x => await x.LoadAsync(Guid.Parse("91F9423E-F36B-1410-8F2B-00F968453034")));
             ScoreMenuItem = MenuItem.Create<ScoreViewModel>("Scores");
             SettingsMenuItem = MenuItem.Create<LauncherViewModel>("Settings");
             TestMenuItem = MenuItem.Create("Insert Test", InsertAction);
+            SearchTopicsMenuItem = MenuItem.Create<SearchTopicsViewModel>("Search Topics");
         }
 
         private async Task OnCreation()
         {
             await MathAction();
         }
+        public MenuItem SearchTopicsMenuItem { get; }
 
         public MenuItem MathMenuItem { get; }
         public MenuItem ScoreMenuItem { get; }
@@ -57,7 +60,7 @@ namespace SpellingTest.Maui.Pages.Menu
         {
             try
             {
-                await _nav.PushPopupAsync<MathPickerViewModel>(null );
+                await _nav.PushPopupAsync<MathPickerViewModel>(null);
                 HideMenu();
             }
             catch (Exception ex)
@@ -77,9 +80,9 @@ namespace SpellingTest.Maui.Pages.Menu
                 Seconds = 117
             });
         }
-     
+
         public override string Title => "Main Menu";
-        
+
     }
 }
 

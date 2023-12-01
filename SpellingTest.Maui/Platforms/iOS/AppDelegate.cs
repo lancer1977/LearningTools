@@ -11,8 +11,8 @@ namespace SpellingTest.Maui
         {
             CrossMediaManager.Current.Init();
             return base.FinishedLaunching(application, launchOptions);
- 
-          
+
+
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

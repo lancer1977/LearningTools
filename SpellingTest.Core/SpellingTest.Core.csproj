@@ -36,6 +36,9 @@
     <None Remove="PolyhydraGames.Core.ReactiveUI" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PFCore\PolyhydraGames.Core.Identity\PolyhydraGames.Core.Identity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Update="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
   </ItemGroup>
 </Project>

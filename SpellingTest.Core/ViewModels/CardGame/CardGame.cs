@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PolyhydraGames.Extensions;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
-using PolyhydraGames.Extensions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace SpellingTest.Core.ViewModels.CardGame
 {

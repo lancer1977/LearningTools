@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using PolyhydraGames.Extensions;
+﻿using PolyhydraGames.Extensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 
 namespace SpellingTest.Core.ViewModels.Math
 {
@@ -13,7 +13,7 @@ namespace SpellingTest.Core.ViewModels.Math
         {
             StartCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                var config = new SpeedMathConfig(Question.ToInt(), Difficulty, Feature );
+                var config = new SpeedMathConfig(Question.ToInt(), Difficulty, Feature);
                 await nav.PopPopupAsync();
                 await nav.PushAsync<SpeedMathViewModel>(async x => await x.LoadAsync(config));
             });

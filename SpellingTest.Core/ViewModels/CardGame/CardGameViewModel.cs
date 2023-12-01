@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace SpellingTest.Core.ViewModels.CardGame
 {
@@ -29,7 +29,7 @@ namespace SpellingTest.Core.ViewModels.CardGame
             _quizService = quizService;
             _textToSpeech = textToSpeech;
             Message = "Pick a card";
-            ResetCommand = ReactiveCommand.CreateFromTask( async () => await ResetGame());
+            ResetCommand = ReactiveCommand.CreateFromTask(async () => await ResetGame());
             SelectCard = ReactiveCommand.CreateFromTask<string, Unit>(async (x) =>
              {
                  var response = Game.PickCard(x);
@@ -43,7 +43,7 @@ namespace SpellingTest.Core.ViewModels.CardGame
              });
             this.WhenAnyValue(x => x.ShowImage, x => x.ShowName, (image, name) => (image, name))
                 .Subscribe((x) => Game?.SetVisibility(x.name, x.image));
-      
+
         }
 
         private async Task ResetGame()
@@ -57,8 +57,8 @@ namespace SpellingTest.Core.ViewModels.CardGame
 
         public override async Task StartAsync()
         {
-           
-            await ResetGame();  
+
+            await ResetGame();
             await base.StartAsync();
         }
 

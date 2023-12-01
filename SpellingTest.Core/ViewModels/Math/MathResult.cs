@@ -1,4 +1,4 @@
-﻿ 
+﻿
 
 namespace SpellingTest.Core.ViewModels.Math
 {
@@ -10,15 +10,15 @@ namespace SpellingTest.Core.ViewModels.Math
         {
             return new MathResult()
             {
-                Color =   "Green"  ,
+                Color = "Green",
                 Text = $"Question: {question}\nAnswer:{yourAnswer}"
             };
         }
-        public static MathResult GetIncorrectResult( string question, string yourAnswer,string correctAnswer)
+        public static MathResult GetIncorrectResult(string question, string yourAnswer, string correctAnswer)
         {
             return new MathResult()
             {
-                Color =   "Red",
+                Color = "Red",
                 Text = $"Question: {question} \n Answer:{correctAnswer} Your Answer:{yourAnswer}"
             };
         }

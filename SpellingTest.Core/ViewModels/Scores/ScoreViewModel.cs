@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using DynamicData;
+﻿using DynamicData;
 using DynamicData.Binding;
 using Microsoft.AppCenter.Crashes;
 using PolyhydraGames.Learning.Dtos;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SpellingTest.Core.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace SpellingTest.Core.ViewModels.Scores
 {
@@ -34,8 +34,8 @@ namespace SpellingTest.Core.ViewModels.Scores
         public ScoreViewModel(IMathScoreService mathService)
         {
             MathService = mathService;
-         
-            IdiomSelections = new List<EnumSelection<Idiom?>>()   
+
+            IdiomSelections = new List<EnumSelection<Idiom?>>()
             {
                 new EnumSelection<Idiom?>(null,"None")
             };
@@ -50,12 +50,13 @@ namespace SpellingTest.Core.ViewModels.Scores
             };
             foreach (Feature item in Enum.GetValues(typeof(Feature)))
             {
-                
+
                 FeatureSelections.Add(new EnumSelection<Feature?>(item));
             }
 
             var connection = _items.Connect();
-            var filterFunc = this.WhenAnyValue(x => x.SelectedIdiom, x => x.SelectedFeature).Select((x) => {
+            var filterFunc = this.WhenAnyValue(x => x.SelectedIdiom, x => x.SelectedFeature).Select((x) =>
+            {
                 return new Func<SpeedMathResult, bool>(result =>
                 {
                     if (x.Item1.Selection != null && x.Item1.Selection != Idiom.TV) return false;
@@ -71,7 +72,7 @@ namespace SpellingTest.Core.ViewModels.Scores
             SelectedIdiom = IdiomSelections.First();
             SelectedFeature = FeatureSelections.First();
         }
-        public List<EnumSelection<Idiom?>> IdiomSelections { get;  }
+        public List<EnumSelection<Idiom?>> IdiomSelections { get; }
         [Reactive] public EnumSelection<Idiom?> SelectedIdiom { get; set; }
         public List<EnumSelection<Feature?>> FeatureSelections { get; }
         [Reactive] public EnumSelection<Feature?> SelectedFeature { get; set; }
@@ -79,7 +80,7 @@ namespace SpellingTest.Core.ViewModels.Scores
         private ReadOnlyObservableCollection<SpeedMathResult> _collection;
         public ReadOnlyObservableCollection<SpeedMathResult> Items => _collection;
         private IMathScoreService MathService { get; }
-        
+
         public override async Task OnAppearingAsync()
         {
             await base.OnAppearingAsync();

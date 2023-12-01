@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using PolyhydraGames.Extensions;
+﻿using PolyhydraGames.Extensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SpellingTest.Core.Helpers;
 using SpellingTest.Core.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace SpellingTest.Core.ViewModels.Math
 {
@@ -75,7 +75,7 @@ namespace SpellingTest.Core.ViewModels.Math
             if (_isLoaded) return;
             try
             {
-               // 
+                // 
 
                 StartTime = DateTime.Now;
                 _isLoaded = true;

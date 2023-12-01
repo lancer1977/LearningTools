@@ -1,4 +1,4 @@
-﻿ 
+﻿
 using SpellingTest.Core.ViewModels.Math;
 
 namespace SpellingTest.Maui.Pages.SpeedMath
@@ -17,4 +17,4 @@ namespace SpellingTest.Maui.Pages.SpeedMath
             answerBox.Focus();
         }
     }
-} 
+}

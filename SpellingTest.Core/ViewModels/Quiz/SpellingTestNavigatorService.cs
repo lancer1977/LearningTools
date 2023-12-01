@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SpellingTest.Core.Interfaces;
+using System;
 using System.Threading.Tasks;
-using SpellingTest.Core.Interfaces;
 
 namespace SpellingTest.Core.ViewModels.Quiz;
 

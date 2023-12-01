@@ -4,8 +4,6 @@ using Blazorise.Icons.FontAwesome;
 using PolyhydraGames.Blazor.Data.CurrentPage;
 using PolyhydraGames.BlazorComponents.CurrentPage;
 using PolyhydraGames.BlazorComponents.Dialog;
-using PolyhydraGames.Core.Interfaces;
-using PolyhydraGames.Learning.Interfaces;
 using PolyhydraGames.Learning.RestAsync.Services;
 using PolyhydraGames.SignalR.Service;
 using SpellingTest.Core.Interfaces;
@@ -40,7 +38,7 @@ public static class ApiRegistrationHelper
             new ChatService(SignalRHelpers.Create(config["Endpoints:Website"], "chathub")));
         builder.AddScoped<ICurrentPage, CurrentPageService>();
         builder.AddScoped<ISpellingNavigatorService, NavigationHelper>();
-        
+
         builder.AddScoped<IOwnerService, OwnerService>();
         builder.AddScoped<IQuizService, QuizService>();
         builder.AddScoped<IMathScoreService, SpeedMathService>();
@@ -49,5 +47,5 @@ public static class ApiRegistrationHelper
         builder.AddScoped<IMainThreadDispatcher, MainThreadDispatcher>();
     }
 
- 
+
 }

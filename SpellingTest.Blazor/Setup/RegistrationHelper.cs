@@ -37,7 +37,7 @@ public static class ApiRegistrationHelper
             new ChatService(SignalRHelpers.Create(builder.Configuration["Endpoints:Website"], "chathub")));
         builder.Services.AddScoped<ICurrentPage, CurrentPageService>();
         builder.Services.AddScoped<ISpellingNavigatorService, NavigationHelper>();
-        
+
         builder.Services.AddScoped<IOwnerService, OwnerService>();
         builder.Services.AddScoped<IQuizService, QuizService>();
         builder.Services.AddScoped<IMathScoreService, SpeedMathService>();

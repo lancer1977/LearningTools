@@ -19,6 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellingTest.Wasm", "Spelli
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{7063A053-2D08-49D3-BE0D-C9903522EF45}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{4B7B318F-D95B-44C8-A58E-1DFCAB15156B}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Goals.md = C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Goals.md
+		C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Purpose.md = C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Purpose.md
+		C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Secrets.md = C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Secrets.md
+		C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Technology.md = C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Technology.md
+		C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Web.md = C:\Users\lance\SynologyDrive\obsidian\Projects\Learning (School) Tools\Web.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolyhydraGames.Core.Identity", "..\PFCore\PolyhydraGames.Core.Identity\PolyhydraGames.Core.Identity.csproj", "{71DF5A43-E520-411C-8D6D-7A582EBDF51B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +202,34 @@ Global
 		{AE6D3AE7-281D-482E-BEB8-810619B9C596}.Release|x64.Build.0 = Release|Any CPU
 		{AE6D3AE7-281D-482E-BEB8-810619B9C596}.Release|x86.ActiveCfg = Release|Any CPU
 		{AE6D3AE7-281D-482E-BEB8-810619B9C596}.Release|x86.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|x64.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Debug|x86.Build.0 = Debug|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|ARM.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|ARM64.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|iPhone.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|x64.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|x64.Build.0 = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|x86.ActiveCfg = Release|Any CPU
+		{71DF5A43-E520-411C-8D6D-7A582EBDF51B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

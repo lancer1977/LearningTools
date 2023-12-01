@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Components;
+using ReactiveUI;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -7,9 +9,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.AspNetCore.Components;
-using PolyhydraGames.Core.Interfaces;
-using ReactiveUI;
 
 namespace SpellingTest.Wasm.Components;
 
@@ -63,7 +62,7 @@ public class PolyComponentInjectableBase<T> : PolyComponentBase<T>
 }
 
 
-public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>,  INotifyPropertyChanged, ICanActivate, IDisposable where T : class, INotifyPropertyChanged, IViewModelAsync
+public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>, INotifyPropertyChanged, ICanActivate, IDisposable where T : class, INotifyPropertyChanged, IViewModelAsync
 {
     private readonly Subject<Unit> _initSubject = new();
     [SuppressMessage("Design", "CA2213: Dispose object", Justification = "Used for deactivation.")]
@@ -79,7 +78,7 @@ public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>,  INotif
 
     /// <inheritdoc />
     public event PropertyChangedEventHandler? PropertyChanged;
-    
+
     public abstract T ViewModel { get; set; }
 
     /// <inheritdoc />
@@ -103,7 +102,7 @@ public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>,  INotif
         GC.SuppressFinalize(this);
     }
 
- 
+
     protected override async Task OnInitializedAsync()
     {
         _initSubject.OnNext(Unit.Default);
@@ -118,7 +117,7 @@ public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>,  INotif
         await ViewModel.StartAsync();
     }
 
- 
+
     /// <inheritdoc/>
     protected override void OnAfterRender(bool firstRender)
     {
@@ -134,7 +133,7 @@ public abstract class PolyComponentBase<T> : ComponentBase, IViewFor<T>,  INotif
             viewModelChanged
                 .Subscribe(_ =>
                 {
-                    InvokeAsync(StateHasChanged); 
+                    InvokeAsync(StateHasChanged);
                 })
                 .DisposeWith(_compositeDisposable);
 

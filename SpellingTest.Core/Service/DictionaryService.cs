@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using MerriamWebster.NET;
+﻿using MerriamWebster.NET;
 using PolyhydraGames.Extensions;
 using SpellingTest.Core.Interfaces;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpellingTest.Core.Service
 {
@@ -20,9 +20,9 @@ namespace SpellingTest.Core.Service
             //var loggerFactory = new LoggerFactory();
             //var client = new MerriamWebster.NET.MerriamWebsterClient(service.CreateHttp(), dict,
             //    new Logger<MerriamWebsterClient>(loggerFactory));
-            
 
-        } 
+
+        }
 
         public async Task<string> GetAsync(string word)
         {
@@ -31,7 +31,7 @@ namespace SpellingTest.Core.Service
         }
 
 
- 
+
     }
 }
 

@@ -1,7 +1,7 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace SpellingTest.Wasm.Setup;
 
@@ -78,4 +78,4 @@ public class BffAuthenticationStateProvider : AuthenticationStateProvider
     }
 }
 
- 
+
