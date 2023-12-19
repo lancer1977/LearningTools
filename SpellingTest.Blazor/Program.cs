@@ -1,4 +1,9 @@
+using IdentityModel.OidcClient;
+using IdentityModel.OidcClient.Browser;
 using PolyhydraGames.BlazorComponents;
+using PolyhydraGames.Core.Identity;
+using SpellingTest.Core;
+using SpellingTest.Web.Services.Fakes;
 using SpellingTest.Web.Setup;
 
 //builder.Configuration.AddJsonFile("configs/secret.json", false, reloadOnChange: true).Build();
@@ -12,6 +17,21 @@ builder.Services.AddSignalR();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IAuthenticationClient, AuthenticationService>();
+builder.Services.AddSingleton<IPolyhydraToken, PolyhydraToken>();
+builder.Services.AddSingleton<ITextToSpeech, TextToSpeech>();
+
+builder.Services.AddSingleton(x => new OidcClient(new OidcClientOptions()
+{
+    Authority = "https://identity.polyhydragames.com",
+    ClientId = Constants.ClientId,
+    Scope = Constants.Scope,
+
+    RedirectUri = Constants.RedirectUri,
+    Browser = x.GetRequiredService<IBrowser>()
+
+
+}));
 builder.AddOIDC();
 builder.AddMiscServices();
 builder.RegisterRest();
