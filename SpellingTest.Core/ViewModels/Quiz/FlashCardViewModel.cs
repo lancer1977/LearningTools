@@ -1,14 +1,4 @@
-﻿using PolyhydraGames.Extensions;
-using PolyhydraGames.Extensions.Dice;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using PolyhydraGames.Extensions.Dice;
 
 namespace SpellingTest.Core.ViewModels.Quiz
 {

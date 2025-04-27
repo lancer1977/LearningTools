@@ -1,14 +1,5 @@
 ﻿using PolyhydraGames.Core.Global.Properties;
-using PolyhydraGames.Extensions;
 using PolyhydraGames.Extensions.Dice;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace SpellingTest.Core.ViewModels.Math
 {

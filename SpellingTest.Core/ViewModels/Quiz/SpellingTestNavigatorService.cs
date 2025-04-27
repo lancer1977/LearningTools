@@ -1,8 +1,4 @@
-﻿using SpellingTest.Core.Interfaces;
-using System;
-using System.Threading.Tasks;
-
-namespace SpellingTest.Core.ViewModels.Quiz;
+﻿namespace SpellingTest.Core.ViewModels.Quiz;
 
 public class SpellingTestNavigatorService : ISpellingNavigatorService
 {

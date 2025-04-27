@@ -1,11 +1,4 @@
-﻿using PolyhydraGames.Extensions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-
-namespace SpellingTest.Core.ViewModels.Math
+﻿namespace SpellingTest.Core.ViewModels.Math
 {
     public class MathPickerViewModel : ViewModelAsyncBase
     {

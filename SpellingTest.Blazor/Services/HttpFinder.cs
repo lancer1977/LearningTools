@@ -3,9 +3,9 @@
 public class HttpFinder : IHttpService
 {
     private readonly IHttpClientFactory _clientFactory;
-    private readonly IOwnerService _ownerService;
+    private readonly IIdentityService _ownerService;
     private static int count = 0;
-    public HttpFinder(IHttpClientFactory clientFactory, IOwnerService ownerService)
+    public HttpFinder(IHttpClientFactory clientFactory, IIdentityService ownerService)
     {
         _clientFactory = clientFactory;
         _ownerService = ownerService;

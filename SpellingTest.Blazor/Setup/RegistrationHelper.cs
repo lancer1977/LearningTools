@@ -2,7 +2,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using PolyhydraGames.BlazorComponents.Dialog;
-using PolyhydraGames.Core.AspNet.OwnerMiddleware;
+using PolyhydraGames.Core.Identity;
 using PolyhydraGames.Learning.Interfaces;
 using PolyhydraGames.Learning.RestAsync.Services;
 using PolyhydraGames.SignalR.Service;
@@ -38,7 +38,7 @@ public static class ApiRegistrationHelper
         builder.Services.AddScoped<ICurrentPage, CurrentPageService>();
         builder.Services.AddScoped<ISpellingNavigatorService, NavigationHelper>();
 
-        builder.Services.AddScoped<IOwnerService, OwnerService>();
+        builder.Services.AddScoped<IIdentityService, ClientSideIdentityService>();
         builder.Services.AddScoped<IQuizService, QuizService>();
         builder.Services.AddScoped<IMathScoreService, SpeedMathService>();
         builder.Services.AddScoped<INavigatorAsync, NavigatorServiceFake>();

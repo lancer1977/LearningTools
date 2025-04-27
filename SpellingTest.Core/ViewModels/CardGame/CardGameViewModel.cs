@@ -1,10 +1,4 @@
-﻿using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Reactive;
 
 namespace SpellingTest.Core.ViewModels.CardGame
 {

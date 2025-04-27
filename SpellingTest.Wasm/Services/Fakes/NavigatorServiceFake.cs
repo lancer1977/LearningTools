@@ -1,13 +1,5 @@
 namespace SpellingTest.Wasm.Services.Fakes;
 
-public class MainThreadDispatcher : IMainThreadDispatcher
-{
-    public void InvokeOnMainThread(Action action)
-    {
-        action.Invoke();
-    }
-}
-
 public class NavigatorServiceFake : INavigatorAsync
 {
     public async Task<IViewModelAsync> PopAsync(bool animated = true)

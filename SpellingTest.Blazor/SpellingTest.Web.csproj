@@ -10,33 +10,34 @@
   </PropertyGroup>
  
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="6.2.0" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.3.3" />
-    <PackageReference Include="Blazorise.Components" Version="1.3.3" />
-    <PackageReference Include="Blazorise.DataGrid" Version="1.3.3" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.3.3" />
-    <PackageReference Include="Blazorise.Markdown" Version="1.3.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0" />
-    <PackageReference Include="PolyhydraGames.BlazorComponents" Version="1.0.1.9" />
-    <PackageReference Include="PolyhydraGames.Core.AspNet" Version="1.0.0.16" />
-    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.41" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="IdentityModel" Version="7.0.0" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Components" Version="1.5.1" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Markdown" Version="1.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
+    <PackageReference Include="PolyhydraGames.BlazorComponents" Version="1.0.1.37" />
+    <PackageReference Include="PolyhydraGames.Core.AspNet" Version="1.0.2.1" />
+    <PackageReference Include="PolyhydraGames.Core.Identity" Version="2.0.2.1" />
+    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.46" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="PolyhydraGames.Collection.Interface" Version="1.0.0.19" />
     <PackageReference Include="PolyhydraGames.Core.Data" Version="1.0.2.12" />
-    <PackageReference Include="PolyhydraGames.Data.Dapper" Version="1.1.1.38" />
-    <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.30" />
-    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.9" />
+    <PackageReference Include="PolyhydraGames.Data.Dapper" Version="1.1.1.46" />
+    <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.51" />
+    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.36" />
     <PackageReference Include="PolyhydraGames.SignalR.Models" Version="1.0.0.6" />
     <PackageReference Include="PolyhydraGames.SignalR.Service" Version="1.0.2.8" />
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="ReactiveUI.Blazor" Version="19.5.1" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
+    <PackageReference Include="CsvHelper" Version="31.0.3" />
+    <PackageReference Include="ReactiveUI.Blazor" Version="19.6.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Markdig" Version="0.33.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="Markdig" Version="0.37.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpellingTest.Core\SpellingTest.Core.csproj" />
@@ -78,6 +79,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.23.2.88755" />
   </ItemGroup>
 </Project>

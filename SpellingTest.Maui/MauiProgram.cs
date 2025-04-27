@@ -2,6 +2,8 @@
 using IdentityModel.OidcClient;
 using Microsoft.Extensions.Logging;
 using Mopups.Hosting;
+using PolyhydraGames.Core.IOC;
+using PolyhydraGames.Core.Maui.Interfaces;
 using PolyhydraGames.Core.Maui.Setup;
 using SpellingTest.Core;
 using SpellingTest.Core.ViewModels.Quiz;
@@ -52,7 +54,8 @@ namespace SpellingTest.Maui
             var build = builder.Build();
 
             build.Services.GetRequiredService<IIOCContainer>();
-            ViewModelModule.ViewFactoryRegistration(viewAssemblies);
+            var factory = IOC.Get<IViewFactoryAsync>();
+            factory.ViewFactoryRegistration(viewAssemblies);
             return build;
         }
     }

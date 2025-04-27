@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace SpellingTest.Core.Service;
+﻿namespace SpellingTest.Core.Service;
 
 public class WebsiteRequestorFake : IWebsiteRequestor
 {

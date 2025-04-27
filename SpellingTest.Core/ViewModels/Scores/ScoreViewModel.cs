@@ -2,16 +2,7 @@
 using DynamicData.Binding;
 using Microsoft.AppCenter.Crashes;
 using PolyhydraGames.Learning.Dtos;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using SpellingTest.Core.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
 
 namespace SpellingTest.Core.ViewModels.Scores
 {
@@ -35,19 +26,13 @@ namespace SpellingTest.Core.ViewModels.Scores
         {
             MathService = mathService;
 
-            IdiomSelections = new List<EnumSelection<Idiom?>>()
-            {
-                new EnumSelection<Idiom?>(null,"None")
-            };
+            IdiomSelections = [new(null, "None")];
             foreach (Idiom item in Enum.GetValues(typeof(Idiom)))
             {
                 IdiomSelections.Add(new EnumSelection<Idiom?>(item));
             }
 
-            FeatureSelections = new List<EnumSelection<Feature?>>()
-            {
-                new EnumSelection<Feature?>(null,"None")
-            };
+            FeatureSelections = [new(null, "None")];
             foreach (Feature item in Enum.GetValues(typeof(Feature)))
             {
 

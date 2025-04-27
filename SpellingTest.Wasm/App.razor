@@ -1,6 +1,6 @@
 ﻿@using SpellingTest.Wasm.OwnerMiddleware
 @using PolyhydraGames.Core.Interfaces
-@inject IOwnerService OwnerService
+@inject IIdentityService OwnerService
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">

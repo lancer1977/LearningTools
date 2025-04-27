@@ -1,14 +1,4 @@
-﻿using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using SpellingTest.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace SpellingTest.Core.ViewModels.Quiz
+﻿namespace SpellingTest.Core.ViewModels.Quiz
 {
     public class QuizListPickerViewModel : ViewModelAsyncBase
     {

@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace SpellingTest.Wasm.OwnerMiddleware;
 
-public class OwnerService : IOwnerService
+public class OwnerService : IIdentityService
 {
     public Guid OwnerId { get; set; }
     public string? AuthorizationToken { get; set; }
@@ -18,5 +18,21 @@ public class OwnerService : IOwnerService
         return expirationDate > DateTime.UtcNow;
     }
 
+    public async Task<Guid> GetOwnerId()
+    {
+        throw new NotImplementedException();
+    }
 
+    public async Task ForceRefresh()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IObservable<Guid> OwnerIdObservable { get; set; }
+
+
+    public void OnLogout()
+    {
+        throw new NotImplementedException();
+    }
 }

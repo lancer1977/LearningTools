@@ -1,5 +1,5 @@
 using IdentityModel.OidcClient;
-using IdentityModel.OidcClient.Browser;
+using IdentityModel.OidcClient.Browser; 
 using PolyhydraGames.BlazorComponents;
 using PolyhydraGames.Core.Identity;
 using SpellingTest.Core;
@@ -8,17 +8,17 @@ using SpellingTest.Web.Setup;
 
 //builder.Configuration.AddJsonFile("configs/secret.json", false, reloadOnChange: true).Build();
 var builder = WebApplication.CreateBuilder(args);
-PolyhydraGames.Core.ReactiveUI.ReactiveExtensions.RegisterErrorCallback(async (title, message) => { Console.WriteLine(title + ":" + message); });
+//PolyhydraGames.Core.ReactiveUI.ReactiveExtensions.RegisterErrorCallback(async (title, message) => { Console.WriteLine(title + ":" + message); });
 
-builder.AddCors();
+builder.AddCors(); 
 builder.Services.AddBlazorise();
 builder.Services.AddBlazorComponents();
 builder.Services.AddSignalR();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IAuthenticationClient, AuthenticationService>();
-builder.Services.AddSingleton<IPolyhydraToken, PolyhydraToken>();
+builder.Services.AddSingleton<IAuthenticationClient, ClientSideIdentityService>();
+//builder.Services.AddSingleton<IPolyhydraToken, Token>();
 builder.Services.AddSingleton<ITextToSpeech, TextToSpeech>();
 
 builder.Services.AddSingleton(x => new OidcClient(new OidcClientOptions()
@@ -28,7 +28,7 @@ builder.Services.AddSingleton(x => new OidcClient(new OidcClientOptions()
     Scope = Constants.Scope,
 
     RedirectUri = Constants.RedirectUri,
-    Browser = x.GetRequiredService<IBrowser>()
+    //Browser = x.GetRequiredService<IBrowser>()
 
 
 }));

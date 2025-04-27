@@ -74,18 +74,21 @@
   </ItemGroup>
 	 <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.22621.0'">
 		 <PackageReference Include="WinUIEx">
-			 <Version>2.3.3</Version>
+			 <Version>2.3.4</Version>
 		 </PackageReference>
 	 </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.2.2" />
-    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.2.61" />
-    <PackageReference Include="ReactiveUI.Maui" Version="19.5.1" />
+    <PackageReference Include="PolyhydraGames.Core.Maui" Version="1.0.3.9" />
+    <PackageReference Include="ReactiveUI.Maui" Version="19.6.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpellingTest.Core\SpellingTest.Core.csproj" />
   </ItemGroup>
+ 
   <ItemGroup>
     <Compile Update="Pages\Launcher\LauncherPage.xaml.cs">
       <DependentUpon>LauncherPage.xaml</DependentUpon>
@@ -133,7 +136,13 @@
     </MauiXaml>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.23.2.88755" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.20" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
   </ItemGroup>
 
 </Project>

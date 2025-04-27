@@ -1,13 +1,4 @@
-﻿using PolyhydraGames.Extensions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using SpellingTest.Core.Helpers;
-using SpellingTest.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
+﻿using SpellingTest.Core.Helpers;
 
 namespace SpellingTest.Core.ViewModels.Math
 {

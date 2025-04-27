@@ -7,8 +7,7 @@ namespace SpellingTest.Wasm.Setup;
 
 public class BffAuthenticationStateProvider : AuthenticationStateProvider
 {
-    private static readonly TimeSpan UserCacheRefreshInterval
-        = TimeSpan.FromSeconds(60);
+    private static readonly TimeSpan UserCacheRefreshInterval = TimeSpan.FromSeconds(60);
 
     private readonly HttpClient _client;
     private readonly ILogger<BffAuthenticationStateProvider> _logger;

@@ -1,9 +1,4 @@
 ﻿using MerriamWebster.NET;
-using PolyhydraGames.Extensions;
-using SpellingTest.Core.Interfaces;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SpellingTest.Core.Service
 {

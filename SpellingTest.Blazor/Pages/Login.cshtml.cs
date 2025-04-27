@@ -23,7 +23,7 @@ namespace SpellingTest.Web.Pages
             return Challenge(new AuthenticationProperties
             {
                 RedirectUri = redirectUri
-            }, OpenIdConnectDefaults.AuthenticationScheme);
+            }, "oidc");
         }
     }
 }

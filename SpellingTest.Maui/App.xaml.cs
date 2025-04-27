@@ -19,8 +19,8 @@ public partial class App : ShellApplication
 
     protected override async void OnStart()
     {
-        _navigationBarColor = Color.FromHex(ColorManager.Settings.GetValueOrDefault(Keys.SplashColor, "#00000000"));
-        ColorManager.LoadColors(this);
+        //_navigationBarColor = Color.FromHex(ColorManager.Settings.GetValueOrDefault(Keys.SplashColor, "#00000000"));
+        //ColorManager.LoadColors(this);
         {
             base.OnStart();
             MainPage = await IOC.Get<IViewFactoryAsync>().ResolveAsync<RootViewModel>();

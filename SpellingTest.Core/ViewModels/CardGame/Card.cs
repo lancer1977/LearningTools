@@ -1,5 +1,4 @@
-﻿using ReactiveUI.Fody.Helpers;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace SpellingTest.Core.ViewModels.CardGame
 {

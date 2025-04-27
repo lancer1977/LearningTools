@@ -1,7 +1,6 @@
 using Blazorise;
 using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
-using PolyhydraGames.Blazor.Data.CurrentPage;
+using Blazorise.Icons.FontAwesome; 
 using PolyhydraGames.BlazorComponents.CurrentPage;
 using PolyhydraGames.BlazorComponents.Dialog;
 using PolyhydraGames.Learning.RestAsync.Services;
@@ -29,7 +28,7 @@ public static class ApiRegistrationHelper
         builder.AddScoped<ISettings, SettingsFake>();
         builder.AddScoped<ISettingsService, SettingsService>();
         builder.AddScoped<IHttpService, HttpFinder>();
-        builder.AddScoped<ITextToSpeech, TextToSpeechFake>();
+        builder.AddScoped<ITextToSpeech, TextToSpeechServiceFake>();
         builder.AddScoped<IDialogService, DialogService>();
         builder.AddScoped<DialogService>();
 
@@ -39,7 +38,7 @@ public static class ApiRegistrationHelper
         builder.AddScoped<ICurrentPage, CurrentPageService>();
         builder.AddScoped<ISpellingNavigatorService, NavigationHelper>();
 
-        builder.AddScoped<IOwnerService, OwnerService>();
+        builder.AddScoped<IIdentityService, OwnerService>();
         builder.AddScoped<IQuizService, QuizService>();
         builder.AddScoped<IMathScoreService, SpeedMathService>();
         builder.AddScoped<INavigatorAsync, NavigatorServiceFake>();

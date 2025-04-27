@@ -1,4 +1,5 @@
-﻿using PolyhydraGames.Core.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using PolyhydraGames.Core.Identity;
 using PolyhydraGames.Core.Maui.Services;
 using PolyhydraGames.Learning.Interfaces;
 using PolyhydraGames.Learning.RestAsync;
@@ -26,9 +27,11 @@ public static class RestfulSetup
         builder.Services.AddSingleton<ISpellingNavigatorService, SpellingTestNavigatorService>();
         builder.Services.AddSingleton<IBrowser>(x => Browser.Default);
         builder.Services.AddSingleton<ITextToSpeech>(x => TextToSpeech.Default);
-        //#if ANDROID || IOS || WINDOWS 
+        #if ANDROID || IOS || WINDOWS 
         builder.Services.AddSingleton<IdentityModel.OidcClient.Browser.IBrowser, MauiAuthenticationBrowser>();
-        //#endif
+        #else
+
+        #endif
         builder.Services.AddSingleton<AuthenticationService>();
         builder.Services.AddSingleton<IAuthenticationClient>(x => x.GetRequiredService<AuthenticationService>());
 

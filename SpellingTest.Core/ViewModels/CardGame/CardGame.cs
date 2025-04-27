@@ -1,13 +1,4 @@
-﻿using PolyhydraGames.Extensions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-
-namespace SpellingTest.Core.ViewModels.CardGame
+﻿namespace SpellingTest.Core.ViewModels.CardGame
 {
     public class CardGame : ReactiveObject
     {
