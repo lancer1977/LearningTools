@@ -14,16 +14,16 @@
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.3" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
-    <PackageReference Include="PolyhydraGames.Core.Global" Version="1.0.2.36" />
-    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.6" />
-    <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.28" />
-    <PackageReference Include="PolyhydraGames.Learning.RestAsync" Version="1.0.1.14" />
+    <PackageReference Include="PolyhydraGames.Core.Global" Version="1.0.3.11" />
+    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.45" />
+    <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.78" />
+    <PackageReference Include="PolyhydraGames.Learning.RestAsync" Version="1.0.1.23" />
     <PackageReference Include="PolyhydraGames.SignalR.Models" Version="1.0.0.6" />
     <PackageReference Include="PolyhydraGames.SignalR.Service" Version="1.0.2.8" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
-    <PackageReference Include="PolyhydraGames.Core.IOC" Version="1.0.0.28" />
-    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.41" />
-    <PackageReference Include="PolyhydraGames.Learning.Interfaces" Version="1.0.0.13" />
+    <PackageReference Include="PolyhydraGames.Core.IOC" Version="1.0.1.1" />
+    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.53" />
+    <PackageReference Include="PolyhydraGames.Learning.Interfaces" Version="1.0.0.21" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Audio\1.mp3" />
