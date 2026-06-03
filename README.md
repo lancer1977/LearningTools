@@ -1,6 +1,15 @@
 # LearningTools
 A project focused on LearningTools.
 
+## Tags
+
+- learning-tools
+- dotnet
+- docs
+- learning
+- ui
+- mod
+
 ## Overview
 This repository contains the LearningTools project. It is designed to provide robust functionality and seamless integration within its ecosystem.
 
