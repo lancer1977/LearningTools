@@ -21,6 +21,7 @@ This repository contains the LearningTools project. It is designed to provide ro
 - Core Capabilities
 - Sub Module Spellingtest Core
 - Sub Module Spellingtest Wasm
+- Polyhydra Software Dashboard
 - [Feature 3 (Beyond the App capability)]
 
 ## 🛠 Technology Stack
