@@ -1,19 +1,18 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY ["SpellingTest.Core/SpellingTest.Core.csproj", "./SpellingTest.Core/"]
 COPY ["SpellingTest.Blazor/SpellingTest.Web.csproj", "./SpellingTest.Blazor/"]
 COPY ["NuGet.Config", "."]
 
-ARG PAT=nokeypassed
-RUN sed -i "s|</configuration>|<packageSourceCredentials><Polyhydra><add key=\"Username\" value=\"PAT\" /><add key=\"ClearTextPassword\" value=\"${PAT}\" /></Polyhydra><Base><add key=\"Username\" value=\"PAT\" /><add key=\"ClearTextPassword\" value=\"${PAT}\" /></Base></packageSourceCredentials></configuration>|" NuGet.Config
-RUN cat NuGet.Config
+ARG GHCR_TOKEN=""
+RUN sed -i "s|</configuration>|<packageSourceCredentials><Polyhydra><add key=\"Username\" value=\"lancer1977\" /><add key=\"ClearTextPassword\" value=\"${GHCR_TOKEN}\" /></Polyhydra></packageSourceCredentials></configuration>|" NuGet.Config
 
 RUN dotnet restore "./SpellingTest.Core/SpellingTest.Core.csproj" --configfile NuGet.Config
 COPY ./SpellingTest.Core ./SpellingTest.Core
