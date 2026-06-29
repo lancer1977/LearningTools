@@ -1,0 +1,16 @@
+@Polyhydra.Trivia.Api_HostAddress = http://localhost:5153
+
+GET {{Polyhydra.Trivia.Api_HostAddress}}/api/topics
+Accept: application/json
+
+###
+
+POST {{Polyhydra.Trivia.Api_HostAddress}}/api/game-sessions
+Content-Type: application/json
+
+{
+  "mode": "ChatPoll",
+  "topicIds": []
+}
+
+###

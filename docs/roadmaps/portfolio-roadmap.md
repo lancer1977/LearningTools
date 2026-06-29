@@ -17,13 +17,20 @@
 ## Discovery
 - [x] Capture and timestamp recent change signal
 - [x] Capture top-level area concentration
-- [ ] Document owner and intent for area: docs(9)
-- [ ] Add explicit release gates for next validation steps
+- [x] Document owner and intent for area: docs(9)
+- [x] Add explicit release gates for next validation steps
 
 ## V1 (stability)
-- [ ] Close gaps in docs and feature notes for recently touched areas
-- [ ] Add or update smoke checks for changed source paths
-- [ ] Validate packaging and deploy assumptions where infra/config changed
+- [x] Close gaps in docs and feature notes for recently touched areas
+- [x] Add or update smoke checks for changed source paths
+- [x] Validate packaging and deploy assumptions where infra/config changed
+
+## Release gates
+
+- The validated modernization path is `Polyhydra.Trivia.slnx`.
+- CI restores with `NuGet.Public.config` so public PR validation does not require private Azure Artifacts credentials.
+- Local validation must run restore, build, test, pack, and API publish before closing implementation issues.
+- The legacy `SpellingTest.*` projects remain migration inputs until the private package/feed dependency is removed or documented with credentials.
 
 ## V2 (confidence)
 - [ ] Add deeper tests on highest-churn areas

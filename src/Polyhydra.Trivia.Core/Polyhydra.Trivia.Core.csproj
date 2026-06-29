@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <PackageId>Polyhydra.Trivia.Core</PackageId>
+    <Authors>Polyhydra</Authors>
+    <Description>Core domain model for Polyhydra Trivia topics, facts, definitions, questions, and game sessions.</Description>
+    <PackageTags>polyhydra;trivia;learning</PackageTags>
+  </PropertyGroup>
+
+</Project>

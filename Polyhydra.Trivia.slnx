@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Polyhydra.Trivia.Api/Polyhydra.Trivia.Api.csproj" />
+    <Project Path="src/Polyhydra.Trivia.Core/Polyhydra.Trivia.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Polyhydra.Trivia.Tests/Polyhydra.Trivia.Tests.csproj" />
+  </Folder>
+</Solution>
