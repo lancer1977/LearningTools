@@ -9,7 +9,6 @@ public sealed class PollResultPresenterTests
     public void PresenterHidesCorrectBadgeUntilResultsAreRevealed()
     {
         var question = CreateQuestion();
-        var presenter = new PollResultPresenter();
         var results = new PollResults(
             question.Id,
             false,
@@ -20,7 +19,7 @@ public sealed class PollResultPresenterTests
                 new PollChoiceResult("B", 3, 75)
             ]);
 
-        var view = presenter.Create(question, results);
+        var view = PollResultPresenter.Create(question, results);
 
         Assert.False(view.IsRevealed);
         Assert.DoesNotContain(view.Choices.Single(choice => choice.AnswerId == "A").Badges, badge => badge == "Correct");
@@ -31,7 +30,6 @@ public sealed class PollResultPresenterTests
     public void PresenterHighlightsCorrectMajorityAndStreamerChoicesAfterReveal()
     {
         var question = CreateQuestion();
-        var presenter = new PollResultPresenter();
         var results = new PollResults(
             question.Id,
             true,
@@ -42,7 +40,7 @@ public sealed class PollResultPresenterTests
                 new PollChoiceResult("B", 1, 20)
             ]);
 
-        var view = presenter.Create(question, results, "B");
+        var view = PollResultPresenter.Create(question, results, "B");
 
         var correct = view.Choices.Single(choice => choice.AnswerId == "A");
         Assert.Contains("Correct", correct.Badges);

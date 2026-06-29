@@ -16,14 +16,14 @@ else if (question is null)
 {
     <p>Loading results preview...</p>
 }
-else
+else if (previewResults is not null)
 {
     <PollResultsDisplay Question="question" Results="previewResults" Context="PollDisplayContext.Stream" />
 }
 
 @code {
     private Question? question;
-    private PollResults previewResults = new(Guid.Empty, false, null, null, []);
+    private PollResults? previewResults;
     private string? loadError;
 
     protected override async Task OnInitializedAsync()

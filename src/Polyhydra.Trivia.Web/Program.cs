@@ -12,7 +12,6 @@ builder.Services.AddHttpClient<TriviaApiClient>((provider, client) =>
     var baseUrl = configuration["TriviaApi:BaseUrl"] ?? "http://localhost:5147";
     client.BaseAddress = new Uri(baseUrl);
 });
-builder.Services.AddSingleton<PollResultPresenter>();
 
 var app = builder.Build();
 
@@ -29,4 +28,4 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.Run();
+await app.RunAsync();

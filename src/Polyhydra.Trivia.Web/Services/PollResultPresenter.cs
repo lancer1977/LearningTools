@@ -2,9 +2,9 @@ using Polyhydra.Trivia.Core;
 
 namespace Polyhydra.Trivia.Web.Services;
 
-public sealed class PollResultPresenter
+public static class PollResultPresenter
 {
-    public PollResultsView Create(Question question, PollResults results, string? streamerAnswerId = null)
+    public static PollResultsView Create(Question question, PollResults results, string? streamerAnswerId = null)
     {
         if (question.Id != results.QuestionId)
         {

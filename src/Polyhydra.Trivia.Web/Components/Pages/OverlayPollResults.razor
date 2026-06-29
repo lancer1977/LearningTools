@@ -8,7 +8,7 @@
     {
         <p>Waiting for results...</p>
     }
-    else
+    else if (previewResults is not null)
     {
         <PollResultsDisplay Question="question" Results="previewResults" Context="PollDisplayContext.Overlay" />
     }
@@ -16,7 +16,7 @@
 
 @code {
     private Question? question;
-    private PollResults previewResults = new(Guid.Empty, true, null, null, []);
+    private PollResults? previewResults;
 
     protected override async Task OnInitializedAsync()
     {

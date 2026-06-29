@@ -39,8 +39,10 @@ jobs:
 
       - name: Resolve package version
         shell: bash
+        env:
+          PACKAGE_VERSION_INPUT: ${{ inputs.package_version }}
         run: |
-          version="${{ inputs.package_version }}"
+          version="$PACKAGE_VERSION_INPUT"
           if [[ -z "$version" ]]; then
             version="${GITHUB_REF_NAME#v}"
           fi
@@ -61,10 +63,13 @@ jobs:
           -p:PackageVersion="$PACKAGE_VERSION"
 
       - name: Publish to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_OWNER: ${{ github.repository_owner }}
         run: >
           dotnet nuget push "artifacts/packages/*.nupkg"
-          --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-          --api-key "${{ secrets.GITHUB_TOKEN }}"
+          --source "https://nuget.pkg.github.com/${PACKAGE_OWNER}/index.json"
+          --api-key "$GITHUB_TOKEN"
           --skip-duplicate
 
       - name: Publish to NuGet.org

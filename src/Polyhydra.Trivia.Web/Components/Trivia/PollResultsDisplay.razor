@@ -1,8 +1,6 @@
-@inject PollResultPresenter Presenter
-
 @if (Question is not null && Results is not null)
 {
-    var view = Presenter.Create(Question, Results, StreamerAnswerId);
+    var view = PollResultPresenter.Create(Question, Results, StreamerAnswerId);
 
     <section class="@($"poll-results {Context.ToString().ToLowerInvariant()}")">
         <header>
