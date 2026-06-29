@@ -34,6 +34,12 @@ public sealed class DomainTests
     public void AiGeneratedQuestionCannotPublishWithoutHumanReview()
     {
         var topic = Topic.Create("Modern .NET", "modern-dotnet", "Platform trivia");
+        var metadata = new GeneratedQuestionMetadata(
+            "test-provider",
+            "test-model",
+            "facts-to-question-v1",
+            DateTimeOffset.UtcNow,
+            "One fact about content review.");
         var question = Question.Create(
             topic.Id,
             "Which status must happen before publish?",
@@ -41,12 +47,44 @@ public sealed class DomainTests
             "B",
             "Generated content must be reviewed before publishing.",
             Difficulty.Medium,
-            status: ContentStatus.AiGenerated);
+            status: ContentStatus.AiGenerated,
+            generatedMetadata: metadata);
 
         Assert.Throws<InvalidOperationException>(() => question.Publish());
 
         var published = question.MarkHumanReviewed().Publish();
         Assert.Equal(ContentStatus.Published, published.Status);
+    }
+
+    [Fact]
+    public async Task AiTriviaWorkflowStoresGeneratedContentForReview()
+    {
+        var topic = Topic.Create("Modern .NET", "modern-dotnet", "Platform trivia");
+        var fact = Fact.Create(
+            topic.Id,
+            ".NET supports web applications through ASP.NET Core.",
+            Difficulty.Easy,
+            0.95m,
+            new Uri("https://dotnet.microsoft.com/apps/aspnet"));
+        var metadata = new GeneratedQuestionMetadata(
+            "fixture-provider",
+            "fixture-model",
+            "facts-to-question-v1",
+            DateTimeOffset.UtcNow,
+            "Generated from the ASP.NET Core fact.");
+        var workflow = new AiTriviaContentWorkflow(new FixedTriviaQuestionGenerator(metadata));
+
+        var question = await workflow.GenerateQuestionFromFactsAsync(
+            topic,
+            [fact],
+            Difficulty.Easy,
+            "Create one beginner-friendly multiple-choice question.");
+
+        Assert.Equal(ContentStatus.AiGenerated, question.Status);
+        Assert.Equal(metadata, question.GeneratedMetadata);
+        Assert.Equal(fact.Id, question.SourceFactId);
+        Assert.Contains("ASP.NET Core", question.Explanation, StringComparison.Ordinal);
+        Assert.Throws<InvalidOperationException>(() => question.Publish());
     }
 
     [Fact]
@@ -80,5 +118,24 @@ public sealed class DomainTests
 
         Assert.True(revealedResults.IsRevealed);
         Assert.Equal("A", revealedResults.CorrectAnswerId);
+    }
+}
+
+internal sealed class FixedTriviaQuestionGenerator(GeneratedQuestionMetadata metadata) : ITriviaQuestionGenerator
+{
+    public Task<GeneratedTriviaQuestionDraft> GenerateQuestionAsync(
+        AiTriviaGenerationRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        Assert.Equal("Modern .NET", request.TopicTitle);
+        Assert.Single(request.Facts);
+
+        return Task.FromResult(new GeneratedTriviaQuestionDraft(
+            "Which .NET technology is used for web applications?",
+            [AnswerChoice.Create("A", "ASP.NET Core"), AnswerChoice.Create("B", "WinForms")],
+            "A",
+            "ASP.NET Core is the .NET web application framework.",
+            request.Difficulty,
+            metadata));
     }
 }

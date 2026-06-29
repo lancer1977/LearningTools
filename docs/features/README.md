@@ -21,6 +21,7 @@ This directory documents all features and roadmap items. All state is now tracke
 - [Sub-module: SpellingTest.Blazor](./sub-module-spellingtest-blazor.md)
 - [Polyhydra Software Dashboard](./polyhydra-software-dashboard.md)
 - [Polyhydra Trivia Platform](./polyhydra-trivia-platform.md)
+- [AI-Assisted Trivia Content](./ai-assisted-trivia-content.md)
 
 
 ## Beyond the App

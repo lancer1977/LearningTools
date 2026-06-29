@@ -27,7 +27,8 @@ public sealed record Question(
     string Explanation,
     Difficulty Difficulty,
     Guid? SourceFactId,
-    ContentStatus Status)
+    ContentStatus Status,
+    GeneratedQuestionMetadata? GeneratedMetadata = null)
 {
     public static Question Create(
         Guid topicId,
@@ -37,7 +38,8 @@ public sealed record Question(
         string explanation,
         Difficulty difficulty,
         Guid? sourceFactId = null,
-        ContentStatus status = ContentStatus.Draft)
+        ContentStatus status = ContentStatus.Draft,
+        GeneratedQuestionMetadata? generatedMetadata = null)
     {
         if (topicId == Guid.Empty)
         {
@@ -76,6 +78,13 @@ public sealed record Question(
             throw new ArgumentException("Questions must be human reviewed before publishing.", nameof(status));
         }
 
+        if (status == ContentStatus.AiGenerated && generatedMetadata is null)
+        {
+            throw new ArgumentException("AI-generated questions require generation metadata.", nameof(generatedMetadata));
+        }
+
+        generatedMetadata?.Validate();
+
         return new Question(
             Guid.NewGuid(),
             topicId,
@@ -85,7 +94,8 @@ public sealed record Question(
             explanation.Trim(),
             difficulty,
             sourceFactId,
-            status);
+            status,
+            generatedMetadata);
     }
 
     public Question MarkHumanReviewed() => this with { Status = ContentStatus.HumanReviewed };
