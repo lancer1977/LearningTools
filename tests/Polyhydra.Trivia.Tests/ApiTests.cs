@@ -16,6 +16,16 @@ public sealed class ApiTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task OpenApiDocumentIsAvailableInDevelopment()
+    {
+        var response = await client.GetAsync("/openapi/v1.json");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("/api/topics", body, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task TopicsCanBeListedAndFetchedBySlug()
     {
         var topics = await client.GetFromJsonAsync<Topic[]>("/api/topics");

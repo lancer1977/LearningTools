@@ -31,6 +31,7 @@ Generated or draft questions cannot be published directly. Questions must move t
 
 The API currently provides an in-memory implementation for the first happy path:
 
+- `GET /openapi/v1.json` in development
 - `GET /api/topics`
 - `GET /api/topics/{slug}`
 - `POST /api/topics`
