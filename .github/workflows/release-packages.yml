@@ -5,11 +5,6 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
-    inputs:
-      package_version:
-        description: "Override the package version. Defaults to the tag name without the leading v."
-        required: false
-        type: string
 
 permissions:
   contents: read
@@ -39,12 +34,11 @@ jobs:
 
       - name: Resolve package version
         shell: bash
-        env:
-          PACKAGE_VERSION_INPUT: ${{ inputs.package_version }}
         run: |
-          version="$PACKAGE_VERSION_INPUT"
-          if [[ -z "$version" ]]; then
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
             version="${GITHUB_REF_NAME#v}"
+          else
+            version="0.0.0-ci.${GITHUB_RUN_NUMBER}"
           fi
 
           if [[ -z "$version" ]]; then
@@ -64,7 +58,7 @@ jobs:
 
       - name: Publish to GitHub Packages
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           PACKAGE_OWNER: ${{ github.repository_owner }}
         run: >
           dotnet nuget push "artifacts/packages/*.nupkg"
