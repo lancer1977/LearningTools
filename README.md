@@ -64,8 +64,24 @@ The original `SpellingTest.*` projects remain in the repository for migration co
 
 ## Artifacts
 
-The `Polyhydra Trivia` GitHub Actions workflow restores, builds, tests, packs `Polyhydra.Trivia.Core`, publishes the API output, and uploads test/package/API artifacts as workflow artifacts. Publishing to GitHub Packages or NuGet.org is intentionally deferred until package ownership, release versioning, and required secrets are finalized.
+The `Polyhydra Trivia` GitHub Actions workflow restores, builds, tests, packs `Polyhydra.Trivia.Core`, publishes the API output, and uploads test/package/API artifacts as workflow artifacts. The separate `Publish Packages` workflow publishes tagged releases of `Polyhydra.Trivia.Core` to GitHub Packages and NuGet.org.
+
+Release versions follow semantic tags such as `v1.2.3`; the workflow strips the leading `v` when packing.
+
+To restore a package from GitHub Packages locally, add a user-level NuGet source that has `read:packages` access. One example is:
+
+```bash
+dotnet nuget add source https://nuget.pkg.github.com/lancer1977/index.json \
+  --name github \
+  --username lancer1977 \
+  --password <your-read-packages-token> \
+  --store-password-in-clear-text
+```
 
 ## Persistence
 
-The API currently uses an in-memory store for modernization validation. The proposed durable storage path is documented in [Decision Record 0001](./docs/decisions/0001-trivia-persistence-and-seed-content.md).
+The API uses SQLite through `src/Polyhydra.Trivia.Infrastructure`. Local development defaults to `polyhydra-trivia-dev.db`; non-development runs default to `polyhydra-trivia.db`. Override the path with `ConnectionStrings:Trivia`.
+
+On startup the API creates the SQLite schema with EF Core `EnsureCreated` and imports reviewed seed files from `seed/trivia/*.json` when the database is empty or seed rows need to be updated. The first curated seed file is `seed/trivia/modern-dotnet.json`.
+
+The persistence approach is documented in [Decision Record 0001](./docs/decisions/0001-trivia-persistence-and-seed-content.md). Production schema upgrades should move from `EnsureCreated` to explicit EF Core migrations before the database contains data that cannot be recreated.

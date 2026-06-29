@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Polyhydra.Trivia.Core\Polyhydra.Trivia.Core.csproj" />
+    <ProjectReference Include="..\Polyhydra.Trivia.Infrastructure\Polyhydra.Trivia.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,5 +15,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowMissingPrunePackageData>true</AllowMissingPrunePackageData>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\seed\trivia\*.json" Link="seed\trivia\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

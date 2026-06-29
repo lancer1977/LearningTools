@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "title": "Modern .NET",
+      "slug": "modern-dotnet",
+      "description": "Questions about current .NET platform fundamentals.",
+      "tags": [ "dotnet", "platform" ],
+      "facts": [
+        {
+          "key": "dotnet-workloads",
+          "statement": ".NET supports cloud, web, desktop, mobile, gaming, IoT, and AI workloads.",
+          "sourceUrl": "https://dotnet.microsoft.com/",
+          "difficulty": "Easy",
+          "confidence": 0.95
+        }
+      ],
+      "definitions": [
+        {
+          "term": "Minimal API",
+          "text": "A compact ASP.NET Core style for defining HTTP endpoints directly in code.",
+          "examples": [ "MapGet", "MapPost" ]
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Which ASP.NET Core style maps HTTP endpoints directly in Program.cs?",
+          "choices": [
+            { "id": "A", "text": "Minimal APIs" },
+            { "id": "B", "text": "Windows Forms" },
+            { "id": "C", "text": "XAML resources" },
+            { "id": "D", "text": "MSBuild targets" }
+          ],
+          "correctAnswerId": "A",
+          "explanation": "Minimal APIs let an ASP.NET Core app map routes directly through methods such as MapGet and MapPost.",
+          "difficulty": "Easy",
+          "sourceFactKey": "dotnet-workloads"
+        }
+      ]
+    }
+  ]
+}
