@@ -1,0 +1,53 @@
+@inject PollResultPresenter Presenter
+
+@if (Question is not null && Results is not null)
+{
+    var view = Presenter.Create(Question, Results, StreamerAnswerId);
+
+    <section class="@($"poll-results {Context.ToString().ToLowerInvariant()}")">
+        <header>
+            <h2>@(view.IsRevealed ? "Answer revealed" : "Results hidden")</h2>
+            <p>@Question.Prompt</p>
+        </header>
+
+        <div class="result-bars">
+            @foreach (var choice in view.Choices)
+            {
+                <article class="@($"result-row {choice.CssClass}")">
+                    <div class="result-label">
+                        <strong>@choice.AnswerId</strong>
+                        <span>@choice.Text</span>
+                        @if (choice.Badges.Count > 0)
+                        {
+                            <small>@string.Join(" / ", choice.Badges)</small>
+                        }
+                    </div>
+                    <div class="meter" aria-label="@($"{choice.Text} {choice.Percentage}%")">
+                        <span style="@($"width: {choice.Percentage}%")"></span>
+                    </div>
+                    <b>@choice.Count votes</b>
+                    <b>@choice.Percentage%</b>
+                </article>
+            }
+        </div>
+
+        @if (view.IsRevealed)
+        {
+            <p class="explanation">@Question.Explanation</p>
+        }
+    </section>
+}
+
+@code {
+    [Parameter]
+    public Question? Question { get; set; }
+
+    [Parameter]
+    public PollResults? Results { get; set; }
+
+    [Parameter]
+    public PollDisplayContext Context { get; set; }
+
+    [Parameter]
+    public string? StreamerAnswerId { get; set; }
+}

@@ -27,6 +27,7 @@ This repository contains the LearningTools project. It is designed to provide ro
 - Polyhydra Software Dashboard
 - Polyhydra Trivia Core Domain
 - Polyhydra Trivia API
+- Polyhydra Trivia Web
 - [Feature 3 (Beyond the App capability)]
 
 ## 🛠 Technology Stack
@@ -48,10 +49,23 @@ dotnet restore Polyhydra.Trivia.slnx --configfile NuGet.Public.config
 dotnet build Polyhydra.Trivia.slnx --configuration Release --no-restore
 dotnet test Polyhydra.Trivia.slnx --configuration Release --no-build
 dotnet run --project src/Polyhydra.Trivia.Api/Polyhydra.Trivia.Api.csproj
+dotnet run --project src/Polyhydra.Trivia.Web/Polyhydra.Trivia.Web.csproj
 ```
+
+Run the API and web app together for local UI validation. The web app reads `TriviaApi:BaseUrl` from configuration and defaults to `http://localhost:5147`.
+
+Initial web routes:
+
+- `/`, `/trivia`, `/topics`, `/topics/{slug}`, and `/play`
+- `/admin/topics` and `/admin/questions`
+- `/stream/poll`, `/stream/results`, `/overlay/trivia`, and `/overlay/poll-results`
 
 The original `SpellingTest.*` projects remain in the repository for migration continuity. They still depend on private Polyhydra packages from the Azure Artifacts feed in `NuGet.Config`, so they are not part of the public-feed CI path yet.
 
 ## Artifacts
 
 The `Polyhydra Trivia` GitHub Actions workflow restores, builds, tests, packs `Polyhydra.Trivia.Core`, publishes the API output, and uploads test/package/API artifacts as workflow artifacts. Publishing to GitHub Packages or NuGet.org is intentionally deferred until package ownership, release versioning, and required secrets are finalized.
+
+## Persistence
+
+The API currently uses an in-memory store for modernization validation. The proposed durable storage path is documented in [Decision Record 0001](./docs/decisions/0001-trivia-persistence-and-seed-content.md).

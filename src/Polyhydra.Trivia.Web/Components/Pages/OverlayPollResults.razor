@@ -1,0 +1,35 @@
+@page "/overlay/poll-results"
+@inject TriviaApiClient Api
+
+<PageTitle>Poll Results Overlay</PageTitle>
+
+<div class="overlay-frame">
+    @if (question is null)
+    {
+        <p>Waiting for results...</p>
+    }
+    else
+    {
+        <PollResultsDisplay Question="question" Results="previewResults" Context="PollDisplayContext.Overlay" />
+    }
+</div>
+
+@code {
+    private Question? question;
+    private PollResults previewResults = new(Guid.Empty, true, null, null, []);
+
+    protected override async Task OnInitializedAsync()
+    {
+        var topic = (await Api.GetTopicsAsync()).FirstOrDefault();
+        question = topic is null ? null : (await Api.GetQuestionsAsync(topic.Id)).FirstOrDefault();
+        if (question is not null)
+        {
+            previewResults = new PollResults(
+                question.Id,
+                true,
+                question.CorrectAnswerId,
+                question.CorrectAnswerId,
+                question.Choices.Select(choice => new PollChoiceResult(choice.Id, choice.Id == question.CorrectAnswerId ? 1 : 0, choice.Id == question.CorrectAnswerId ? 100 : 0)).ToArray());
+        }
+    }
+}

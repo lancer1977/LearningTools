@@ -1,16 +1,18 @@
+extern alias ApiApp;
+
 using System.Net;
 using System.Net.Http.Json;
+using ApiApp::Polyhydra.Trivia.Api;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Polyhydra.Trivia.Api;
 using Polyhydra.Trivia.Core;
 
 namespace Polyhydra.Trivia.Tests;
 
-public sealed class ApiTests : IClassFixture<WebApplicationFactory<Program>>
+public sealed class ApiTests : IClassFixture<WebApplicationFactory<ApiApp::Program>>
 {
     private readonly HttpClient client;
 
-    public ApiTests(WebApplicationFactory<Program> factory)
+    public ApiTests(WebApplicationFactory<ApiApp::Program> factory)
     {
         client = factory.CreateClient();
     }

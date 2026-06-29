@@ -1,0 +1,56 @@
+@page "/topics"
+@inject TriviaApiClient Api
+
+<PageTitle>Topics</PageTitle>
+
+<section class="page-header">
+    <h1>Topics</h1>
+    <p>Learning areas available for trivia sessions.</p>
+</section>
+
+@if (loadError is not null)
+{
+    <div class="alert">@loadError</div>
+}
+else if (topics is null)
+{
+    <p>Loading topics...</p>
+}
+else
+{
+    <div class="topic-list">
+        @foreach (var topic in topics)
+        {
+            <article class="topic-row">
+                <div>
+                    <h2>@topic.Title</h2>
+                    <p>@topic.Description</p>
+                    <div class="tag-list">
+                        @foreach (var tag in topic.Tags)
+                        {
+                            <span>@tag</span>
+                        }
+                    </div>
+                </div>
+                <a class="button" href="/topics/@topic.Slug">Questions</a>
+            </article>
+        }
+    </div>
+}
+
+@code {
+    private IReadOnlyList<Topic>? topics;
+    private string? loadError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            topics = await Api.GetTopicsAsync();
+        }
+        catch (HttpRequestException exception)
+        {
+            loadError = $"Trivia API is unavailable: {exception.Message}";
+        }
+    }
+}

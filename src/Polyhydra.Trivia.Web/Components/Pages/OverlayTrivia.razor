@@ -1,0 +1,31 @@
+@page "/overlay/trivia"
+@inject TriviaApiClient Api
+
+<PageTitle>Trivia Overlay</PageTitle>
+
+<div class="overlay-frame">
+    @if (question is null)
+    {
+        <p>Waiting for trivia...</p>
+    }
+    else
+    {
+        <h1>@question.Prompt</h1>
+        <div class="overlay-options">
+            @foreach (var choice in question.Choices)
+            {
+                <span>@choice.Id. @choice.Text</span>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private Question? question;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var topic = (await Api.GetTopicsAsync()).FirstOrDefault();
+        question = topic is null ? null : (await Api.GetQuestionsAsync(topic.Id)).FirstOrDefault();
+    }
+}

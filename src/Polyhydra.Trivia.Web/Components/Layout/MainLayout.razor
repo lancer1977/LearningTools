@@ -1,0 +1,20 @@
+@inherits LayoutComponentBase
+
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" href="/">Polyhydra Trivia</a>
+        <nav>
+            <a href="/trivia">Trivia</a>
+            <a href="/topics">Topics</a>
+            <a href="/play">Play</a>
+            <a href="/stream/poll">Stream Poll</a>
+            <a href="/stream/results">Stream Results</a>
+            <a href="/overlay/trivia">Overlay</a>
+            <a href="/admin/topics">Admin Topics</a>
+            <a href="/admin/questions">Admin Questions</a>
+        </nav>
+    </aside>
+    <main class="content">
+        @Body
+    </main>
+</div>

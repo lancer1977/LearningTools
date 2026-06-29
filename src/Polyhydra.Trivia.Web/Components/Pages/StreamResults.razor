@@ -1,0 +1,50 @@
+@page "/stream/results"
+@inject TriviaApiClient Api
+
+<PageTitle>Stream Results</PageTitle>
+
+<section class="page-header">
+    <h1>Stream Results</h1>
+    <p>Results display for stream operators.</p>
+</section>
+
+@if (loadError is not null)
+{
+    <div class="alert">@loadError</div>
+}
+else if (question is null)
+{
+    <p>Loading results preview...</p>
+}
+else
+{
+    <PollResultsDisplay Question="question" Results="previewResults" Context="PollDisplayContext.Stream" />
+}
+
+@code {
+    private Question? question;
+    private PollResults previewResults = new(Guid.Empty, false, null, null, []);
+    private string? loadError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var topic = (await Api.GetTopicsAsync()).FirstOrDefault();
+            question = topic is null ? null : (await Api.GetQuestionsAsync(topic.Id)).FirstOrDefault();
+            if (question is not null)
+            {
+                previewResults = new PollResults(
+                    question.Id,
+                    false,
+                    null,
+                    null,
+                    question.Choices.Select(choice => new PollChoiceResult(choice.Id, 0, 0)).ToArray());
+            }
+        }
+        catch (HttpRequestException exception)
+        {
+            loadError = $"Trivia API is unavailable: {exception.Message}";
+        }
+    }
+}
