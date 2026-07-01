@@ -1,12 +1,20 @@
-name: change-me
-repo_root: change-me
+name: LearningTools
+repo_root: /mnt/data/lancer1977/code/LearningTools
 
-languages: []
-frameworks: []
+languages:
+  - csharp
+  - razor
+  - markdown
+frameworks:
+  - dotnet
+  - blazor
+  - maui
 
 ci:
-  build: []
-  test: []
+  build:
+    - bash scripts/validate.sh
+  test:
+    - bash scripts/validate.sh
 
 devstudio:
   runtime_model: three-agent

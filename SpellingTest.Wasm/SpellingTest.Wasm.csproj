@@ -17,9 +17,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.4" />
     
-    <PackageReference Include="PolyhydraGames.BlazorComponents" Version="1.0.1.94" />
-    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.45" />
-    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.53" />
+		<ProjectReference Include="../../Core.Blazorise/src/PolyhydraGames.BlazorComponents.csproj" />
+		<ProjectReference Include="../../Core.Interfaces/Interfaces/PolyhydraGames.Core.Interfaces.csproj" />
+		<ProjectReference Include="../../Core/src/PolyhydraGames.Core.ReactiveUI/PolyhydraGames.Core.ReactiveUI.csproj" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" /> 
  
   </ItemGroup>

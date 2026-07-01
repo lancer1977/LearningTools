@@ -1,11 +1,9 @@
 # LearningTools portfolio roadmap
 
-## 90-day evidence snapshot
-- Commits (90 days): 3
-- Files changed (90 days): 17
-- Last signal: 292be41 (4 days ago)
-- Top modified areas: docs(9);00_agile(6);README.md(1);.gitattributes(1)
-- Notes: clean_at_scan
+This local planning file has been migrated. GitHub Issues are the canonical tracker.
+
+Canonical GitHub issue: https://github.com/lancer1977/LearningTools/issues/22
+Original source kind: roadmap
 
 ## Current repo posture
 - Stack: .NET

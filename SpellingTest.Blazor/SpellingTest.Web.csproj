@@ -17,19 +17,19 @@
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.1" />
     <PackageReference Include="Blazorise.Markdown" Version="1.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
-    <PackageReference Include="PolyhydraGames.BlazorComponents" Version="1.0.1.94" />
-    <PackageReference Include="PolyhydraGames.Core.AspNet" Version="1.0.2.43" />
+		<ProjectReference Include="../../Core.Blazorise/src/PolyhydraGames.BlazorComponents.csproj" />
+		<ProjectReference Include="../../Core.AspNet/src/PolyhydraGames.Core.AspNet.csproj" />
     <PackageReference Include="PolyhydraGames.Core.Identity" Version="2.0.2.4" />
-    <PackageReference Include="PolyhydraGames.Core.ReactiveUI" Version="1.0.0.53" />
+		<ProjectReference Include="../../Core/src/PolyhydraGames.Core.ReactiveUI/PolyhydraGames.Core.ReactiveUI.csproj" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="PolyhydraGames.Collection.Interface" Version="1.0.0.19" />
     <PackageReference Include="PolyhydraGames.Core.Data" Version="1.0.2.12" />
     <PackageReference Include="PolyhydraGames.Data.Dapper" Version="1.1.1.59" />
     <PackageReference Include="PolyhydraGames.Extensions" Version="2.1.1.78" />
-    <PackageReference Include="PolyhydraGames.Core.Interfaces" Version="2.0.0.45" />
+		<ProjectReference Include="../../Core.Interfaces/Interfaces/PolyhydraGames.Core.Interfaces.csproj" />
     <PackageReference Include="PolyhydraGames.SignalR.Models" Version="1.0.0.6" />
-    <PackageReference Include="PolyhydraGames.SignalR.Service" Version="1.0.2.8" />
+		<ProjectReference Include="../../Core/src/PolyhydraGames.SignalR/PolyhydraGames.SignalR.Service/PolyhydraGames.SignalR.Service.csproj" />
     <PackageReference Include="CsvHelper" Version="31.0.3" />
     <PackageReference Include="ReactiveUI.Blazor" Version="19.6.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
