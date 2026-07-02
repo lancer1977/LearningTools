@@ -21,7 +21,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Polyhydra.Trivia.Core\Polyhydra.Trivia.Core.csproj" />
-    <ProjectReference Include="..\..\src\Polyhydra.Trivia.Api\Polyhydra.Trivia.Api.csproj" />
+    <ProjectReference Include="..\..\src\Polyhydra.Trivia.Infrastructure\Polyhydra.Trivia.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Polyhydra.Trivia.Api\Polyhydra.Trivia.Api.csproj" Aliases="ApiApp" />
+    <ProjectReference Include="..\..\src\Polyhydra.Trivia.Web\Polyhydra.Trivia.Web.csproj" />
   </ItemGroup>
 
 </Project>

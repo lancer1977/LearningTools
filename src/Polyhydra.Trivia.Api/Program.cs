@@ -1,11 +1,24 @@
 using Polyhydra.Trivia.Api;
+using Polyhydra.Trivia.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<TriviaStore>();
+var connectionString = builder.Configuration.GetConnectionString("Trivia")
+    ?? "Data Source=polyhydra-trivia.db";
+builder.Services.AddDbContext<TriviaDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddScoped<ITriviaStore, TriviaStore>();
+builder.Services.AddScoped<TriviaSeedImporter>();
+builder.Services.AddScoped<TriviaDatabaseInitializer>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<TriviaDatabaseInitializer>();
+    await initializer.InitializeAsync(app.Environment.ContentRootPath);
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -15,65 +28,69 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 var topics = app.MapGroup("/api/topics");
-topics.MapGet("/", (TriviaStore store) => Results.Ok(store.ListTopics()));
-topics.MapGet("/{slug}", (string slug, TriviaStore store) =>
+topics.MapGet("/", async (ITriviaStore store, CancellationToken cancellationToken) =>
+    Results.Ok(await store.ListTopicsAsync(cancellationToken)));
+topics.MapGet("/{slug}", async (string slug, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var topic = store.GetTopic(slug);
+    var topic = await store.GetTopicAsync(slug, cancellationToken);
     return topic is null ? Results.NotFound() : Results.Ok(topic);
 });
-topics.MapPost("/", (CreateTopicRequest request, TriviaStore store) =>
+topics.MapPost("/", async (CreateTopicRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var topic = store.AddTopic(request);
+    var topic = await store.AddTopicAsync(request, cancellationToken);
     return Results.Created($"/api/topics/{topic.Slug}", topic);
 });
-topics.MapPut("/{id:guid}", (Guid id, UpdateTopicRequest request, TriviaStore store) =>
+topics.MapPut("/{id:guid}", async (Guid id, UpdateTopicRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var topic = store.UpdateTopic(id, request);
+    var topic = await store.UpdateTopicAsync(id, request, cancellationToken);
     return topic is null ? Results.NotFound() : Results.Ok(topic);
 });
 
-topics.MapGet("/{id:guid}/facts", (Guid id, TriviaStore store) => Results.Ok(store.ListFacts(id)));
-topics.MapPost("/{id:guid}/facts", (Guid id, CreateFactRequest request, TriviaStore store) =>
+topics.MapGet("/{id:guid}/facts", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
+    Results.Ok(await store.ListFactsAsync(id, cancellationToken)));
+topics.MapPost("/{id:guid}/facts", async (Guid id, CreateFactRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var fact = store.AddFact(id, request);
+    var fact = await store.AddFactAsync(id, request, cancellationToken);
     return fact is null ? Results.NotFound() : Results.Created($"/api/topics/{id}/facts/{fact.Id}", fact);
 });
 
-topics.MapGet("/{id:guid}/definitions", (Guid id, TriviaStore store) => Results.Ok(store.ListDefinitions(id)));
-topics.MapPost("/{id:guid}/definitions", (Guid id, CreateDefinitionRequest request, TriviaStore store) =>
+topics.MapGet("/{id:guid}/definitions", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
+    Results.Ok(await store.ListDefinitionsAsync(id, cancellationToken)));
+topics.MapPost("/{id:guid}/definitions", async (Guid id, CreateDefinitionRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var definition = store.AddDefinition(id, request);
+    var definition = await store.AddDefinitionAsync(id, request, cancellationToken);
     return definition is null ? Results.NotFound() : Results.Created($"/api/topics/{id}/definitions/{definition.Id}", definition);
 });
 
-topics.MapGet("/{id:guid}/questions", (Guid id, TriviaStore store) => Results.Ok(store.ListQuestions(id)));
-topics.MapPost("/{id:guid}/questions", (Guid id, CreateQuestionRequest request, TriviaStore store) =>
+topics.MapGet("/{id:guid}/questions", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
+    Results.Ok(await store.ListQuestionsAsync(id, cancellationToken)));
+topics.MapPost("/{id:guid}/questions", async (Guid id, CreateQuestionRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var question = store.AddQuestion(id, request);
+    var question = await store.AddQuestionAsync(id, request, cancellationToken);
     return question is null ? Results.NotFound() : Results.Created($"/api/topics/{id}/questions/{question.Id}", question);
 });
 
 var sessions = app.MapGroup("/api/game-sessions");
-sessions.MapPost("/", (CreateGameSessionRequest request, TriviaStore store) =>
+sessions.MapPost("/", async (CreateGameSessionRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var session = store.StartSession(request);
+    var session = await store.StartSessionAsync(request, cancellationToken);
     return Results.Created($"/api/game-sessions/{session.Id}", session);
 });
-sessions.MapGet("/{id:guid}", (Guid id, TriviaStore store) =>
+sessions.MapGet("/{id:guid}", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var session = store.GetSession(id);
+    var session = await store.GetSessionAsync(id, cancellationToken);
     return session is null ? Results.NotFound() : Results.Ok(session);
 });
-sessions.MapPost("/{id:guid}/answer", (Guid id, AnswerRequest request, TriviaStore store) =>
-    store.Vote(id, request) ? Results.NoContent() : Results.NotFound());
-sessions.MapPost("/{id:guid}/reveal", (Guid id, TriviaStore store) =>
+sessions.MapPost("/{id:guid}/answer", async (Guid id, AnswerRequest request, ITriviaStore store, CancellationToken cancellationToken) =>
+    await store.VoteAsync(id, request, cancellationToken) ? Results.NoContent() : Results.NotFound());
+sessions.MapPost("/{id:guid}/reveal", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var results = store.Reveal(id);
+    var results = await store.RevealAsync(id, cancellationToken);
     return results is null ? Results.NotFound() : Results.Ok(results);
 });
-sessions.MapGet("/{id:guid}/results", (Guid id, TriviaStore store) =>
+sessions.MapGet("/{id:guid}/results", async (Guid id, ITriviaStore store, CancellationToken cancellationToken) =>
 {
-    var results = store.Results(id);
+    var results = await store.ResultsAsync(id, cancellationToken);
     return results is null ? Results.NotFound() : Results.Ok(results);
 });
 

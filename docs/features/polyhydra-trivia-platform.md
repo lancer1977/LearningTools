@@ -9,6 +9,7 @@ Polyhydra Trivia is the new .NET 10 platform surface for modernizing LearningToo
 - `Polyhydra.Trivia.slnx`
 - `src/Polyhydra.Trivia.Core`
 - `src/Polyhydra.Trivia.Api`
+- `src/Polyhydra.Trivia.Infrastructure`
 - `tests/Polyhydra.Trivia.Tests`
 - `.github/workflows/polyhydra-trivia.yml`
 
@@ -29,7 +30,7 @@ Generated or draft questions cannot be published directly. Questions must move t
 
 ## API Surface
 
-The API currently provides an in-memory implementation for the first happy path:
+The API currently provides a SQLite-backed implementation for:
 
 - `GET /openapi/v1.json` in development
 - `GET /api/topics`
@@ -48,7 +49,26 @@ The API currently provides an in-memory implementation for the first happy path:
 - `POST /api/game-sessions/{id}/reveal`
 - `GET /api/game-sessions/{id}/results`
 
-Persistence, authentication, admin UI, Twitch, and Channel Cheevos adapters remain separate follow-up issues.
+Authentication, full admin UI protection, Twitch, and Channel Cheevos adapters remain separate follow-up issues.
+
+## Persistence
+
+The API depends on an `ITriviaStore` abstraction backed by EF Core SQLite. `Polyhydra.Trivia.Infrastructure` owns the DbContext, entity mappings, startup schema creation, and JSON seed import.
+
+- Local development defaults to `polyhydra-trivia-dev.db`.
+- Non-development runs default to `polyhydra-trivia.db`.
+- `ConnectionStrings:Trivia` overrides the database location.
+- Reviewed seed content lives in `seed/trivia/*.json`.
+- Startup schema management uses EF Core `EnsureCreated`; production upgrade work should replace this with explicit migrations before long-lived data is introduced.
+
+## Packaging
+
+`Polyhydra.Trivia.Core` is the current packable library. Tagged releases use semantic version tags such as `v1.2.3`; the release workflow strips the leading `v` before publishing.
+
+- GitHub Packages publishes use the repository `GITHUB_TOKEN`.
+- NuGet.org publishes use the `NUGET_API_KEY` secret.
+- Local GitHub Packages restore requires a user-level NuGet source with `read:packages` access.
+- The public-feed CI path restores with `NuGet.Public.config` so development does not need Azure Artifacts credentials.
 
 ## Validation
 

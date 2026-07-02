@@ -1,117 +1,161 @@
+using Microsoft.EntityFrameworkCore;
 using Polyhydra.Trivia.Core;
+using Polyhydra.Trivia.Infrastructure;
 
 namespace Polyhydra.Trivia.Api;
 
-public sealed class TriviaStore
+public interface ITriviaStore
 {
-    private readonly List<Topic> topics = [];
-    private readonly List<Fact> facts = [];
-    private readonly List<Definition> definitions = [];
-    private readonly List<Question> questions = [];
-    private readonly List<GameSession> sessions = [];
+    Task<IReadOnlyList<Topic>> ListTopicsAsync(CancellationToken cancellationToken = default);
 
-    public TriviaStore()
+    Task<Topic?> GetTopicAsync(string slug, CancellationToken cancellationToken = default);
+
+    Task<Topic> AddTopicAsync(CreateTopicRequest request, CancellationToken cancellationToken = default);
+
+    Task<Topic?> UpdateTopicAsync(Guid id, UpdateTopicRequest request, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<Fact>> ListFactsAsync(Guid topicId, CancellationToken cancellationToken = default);
+
+    Task<Fact?> AddFactAsync(Guid topicId, CreateFactRequest request, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<Definition>> ListDefinitionsAsync(Guid topicId, CancellationToken cancellationToken = default);
+
+    Task<Definition?> AddDefinitionAsync(Guid topicId, CreateDefinitionRequest request, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<Question>> ListQuestionsAsync(Guid topicId, CancellationToken cancellationToken = default);
+
+    Task<Question?> AddQuestionAsync(Guid topicId, CreateQuestionRequest request, CancellationToken cancellationToken = default);
+
+    Task<GameSessionSnapshot> StartSessionAsync(CreateGameSessionRequest request, CancellationToken cancellationToken = default);
+
+    Task<GameSessionSnapshot?> GetSessionAsync(Guid id, CancellationToken cancellationToken = default);
+
+    Task<bool> VoteAsync(Guid sessionId, AnswerRequest request, CancellationToken cancellationToken = default);
+
+    Task<PollResults?> RevealAsync(Guid sessionId, CancellationToken cancellationToken = default);
+
+    Task<PollResults?> ResultsAsync(Guid sessionId, CancellationToken cancellationToken = default);
+}
+
+public sealed class TriviaStore(TriviaDbContext db) : ITriviaStore
+{
+    public async Task<IReadOnlyList<Topic>> ListTopicsAsync(CancellationToken cancellationToken = default) =>
+        (await db.Topics
+            .OrderBy(topic => topic.Title)
+            .ToArrayAsync(cancellationToken))
+        .Select(topic => topic.ToDomain())
+        .ToArray();
+
+    public async Task<Topic?> GetTopicAsync(string slug, CancellationToken cancellationToken = default)
     {
-        var dotnet = Topic.Create(
-            "Modern .NET",
-            "modern-dotnet",
-            "Questions about current .NET platform fundamentals.",
-            ["dotnet", "platform"]);
-        topics.Add(dotnet);
-
-        var fact = Fact.Create(
-            dotnet.Id,
-            ".NET supports cloud, web, desktop, mobile, gaming, IoT, and AI workloads.",
-            Difficulty.Easy,
-            0.95m,
-            new Uri("https://dotnet.microsoft.com/"));
-        facts.Add(fact);
-
-        definitions.Add(Definition.Create(
-            dotnet.Id,
-            "Minimal API",
-            "A compact ASP.NET Core style for defining HTTP endpoints directly in code.",
-            ["MapGet", "MapPost"]));
-
-        questions.Add(Question.Create(
-                dotnet.Id,
-                "Which ASP.NET Core style maps HTTP endpoints directly in Program.cs?",
-                [
-                    AnswerChoice.Create("A", "Minimal APIs"),
-                    AnswerChoice.Create("B", "Windows Forms"),
-                    AnswerChoice.Create("C", "XAML resources"),
-                    AnswerChoice.Create("D", "MSBuild targets")
-                ],
-                "A",
-                "Minimal APIs let an ASP.NET Core app map routes directly through methods such as MapGet and MapPost.",
-                Difficulty.Easy,
-                fact.Id)
-            .MarkHumanReviewed()
-            .Publish());
+        var normalizedSlug = slug.Trim().ToLowerInvariant();
+        var topic = await db.Topics.SingleOrDefaultAsync(
+            candidate => candidate.Slug == normalizedSlug,
+            cancellationToken);
+        return topic?.ToDomain();
     }
 
-    public IReadOnlyList<Topic> ListTopics() => topics;
-
-    public Topic? GetTopic(string slug) =>
-        topics.SingleOrDefault(topic => string.Equals(topic.Slug, slug, StringComparison.OrdinalIgnoreCase));
-
-    public Topic AddTopic(CreateTopicRequest request)
+    public async Task<Topic> AddTopicAsync(CreateTopicRequest request, CancellationToken cancellationToken = default)
     {
         var topic = Topic.Create(request.Title, request.Slug, request.Description, request.Tags);
-        topics.Add(topic);
+        db.Topics.Add(new TopicEntity
+        {
+            Id = topic.Id,
+            Title = topic.Title,
+            Slug = topic.Slug,
+            Description = topic.Description,
+            TagsJson = DomainMapping.Serialize(topic.Tags)
+        });
+        await db.SaveChangesAsync(cancellationToken);
         return topic;
     }
 
-    public Topic? UpdateTopic(Guid id, UpdateTopicRequest request)
+    public async Task<Topic?> UpdateTopicAsync(Guid id, UpdateTopicRequest request, CancellationToken cancellationToken = default)
     {
-        var index = topics.FindIndex(topic => topic.Id == id);
-        if (index < 0)
+        var entity = await db.Topics.FindAsync([id], cancellationToken);
+        if (entity is null)
         {
             return null;
         }
 
         var updated = Topic.Create(request.Title, request.Slug, request.Description, request.Tags) with { Id = id };
-        topics[index] = updated;
+        entity.Title = updated.Title;
+        entity.Slug = updated.Slug;
+        entity.Description = updated.Description;
+        entity.TagsJson = DomainMapping.Serialize(updated.Tags);
+        await db.SaveChangesAsync(cancellationToken);
         return updated;
     }
 
-    public IReadOnlyList<Fact> ListFacts(Guid topicId) =>
-        facts.Where(fact => fact.TopicId == topicId).ToArray();
+    public async Task<IReadOnlyList<Fact>> ListFactsAsync(Guid topicId, CancellationToken cancellationToken = default) =>
+        (await db.Facts
+            .Where(fact => fact.TopicId == topicId)
+            .OrderBy(fact => fact.Statement)
+            .ToArrayAsync(cancellationToken))
+        .Select(fact => fact.ToDomain())
+        .ToArray();
 
-    public Fact? AddFact(Guid topicId, CreateFactRequest request)
+    public async Task<Fact?> AddFactAsync(Guid topicId, CreateFactRequest request, CancellationToken cancellationToken = default)
     {
-        if (!topics.Any(topic => topic.Id == topicId))
+        if (!await db.Topics.AnyAsync(topic => topic.Id == topicId, cancellationToken))
         {
             return null;
         }
 
         var sourceUrl = string.IsNullOrWhiteSpace(request.SourceUrl) ? null : new Uri(request.SourceUrl);
         var fact = Fact.Create(topicId, request.Statement, request.Difficulty, request.Confidence, sourceUrl);
-        facts.Add(fact);
+        db.Facts.Add(new FactEntity
+        {
+            Id = fact.Id,
+            TopicId = fact.TopicId,
+            Statement = fact.Statement,
+            SourceUrl = fact.SourceUrl?.ToString(),
+            Difficulty = (int)fact.Difficulty,
+            Confidence = fact.Confidence
+        });
+        await db.SaveChangesAsync(cancellationToken);
         return fact;
     }
 
-    public IReadOnlyList<Definition> ListDefinitions(Guid topicId) =>
-        definitions.Where(definition => definition.TopicId == topicId).ToArray();
+    public async Task<IReadOnlyList<Definition>> ListDefinitionsAsync(Guid topicId, CancellationToken cancellationToken = default) =>
+        (await db.Definitions
+            .Where(definition => definition.TopicId == topicId)
+            .OrderBy(definition => definition.Term)
+            .ToArrayAsync(cancellationToken))
+        .Select(definition => definition.ToDomain())
+        .ToArray();
 
-    public Definition? AddDefinition(Guid topicId, CreateDefinitionRequest request)
+    public async Task<Definition?> AddDefinitionAsync(Guid topicId, CreateDefinitionRequest request, CancellationToken cancellationToken = default)
     {
-        if (!topics.Any(topic => topic.Id == topicId))
+        if (!await db.Topics.AnyAsync(topic => topic.Id == topicId, cancellationToken))
         {
             return null;
         }
 
         var definition = Definition.Create(topicId, request.Term, request.Text, request.Examples);
-        definitions.Add(definition);
+        db.Definitions.Add(new DefinitionEntity
+        {
+            Id = definition.Id,
+            TopicId = definition.TopicId,
+            Term = definition.Term,
+            Text = definition.Text,
+            ExamplesJson = DomainMapping.Serialize(definition.Examples)
+        });
+        await db.SaveChangesAsync(cancellationToken);
         return definition;
     }
 
-    public IReadOnlyList<Question> ListQuestions(Guid topicId) =>
-        questions.Where(question => question.TopicId == topicId).ToArray();
+    public async Task<IReadOnlyList<Question>> ListQuestionsAsync(Guid topicId, CancellationToken cancellationToken = default) =>
+        (await db.Questions
+            .Where(question => question.TopicId == topicId)
+            .OrderBy(question => question.Prompt)
+            .ToArrayAsync(cancellationToken))
+        .Select(question => question.ToDomain())
+        .ToArray();
 
-    public Question? AddQuestion(Guid topicId, CreateQuestionRequest request)
+    public async Task<Question?> AddQuestionAsync(Guid topicId, CreateQuestionRequest request, CancellationToken cancellationToken = default)
     {
-        if (!topics.Any(topic => topic.Id == topicId))
+        if (!await db.Topics.AnyAsync(topic => topic.Id == topicId, cancellationToken))
         {
             return null;
         }
@@ -125,55 +169,162 @@ public sealed class TriviaStore
             request.Explanation,
             request.Difficulty,
             request.SourceFactId);
-        questions.Add(question);
+        db.Questions.Add(new QuestionEntity
+        {
+            Id = question.Id,
+            TopicId = question.TopicId,
+            Prompt = question.Prompt,
+            ChoicesJson = DomainMapping.Serialize(question.Choices),
+            CorrectAnswerId = question.CorrectAnswerId,
+            Explanation = question.Explanation,
+            Difficulty = (int)question.Difficulty,
+            SourceFactId = question.SourceFactId,
+            Status = (int)question.Status
+        });
+        await db.SaveChangesAsync(cancellationToken);
         return question;
     }
 
-    public GameSession StartSession(CreateGameSessionRequest request)
+    public async Task<GameSessionSnapshot> StartSessionAsync(CreateGameSessionRequest request, CancellationToken cancellationToken = default)
     {
-        var topicIds = request.TopicIds.Length == 0 ? topics.Select(topic => topic.Id).ToArray() : request.TopicIds;
-        var question = questions.First(candidate => topicIds.Contains(candidate.TopicId));
+        var topicIds = request.TopicIds.Length == 0
+            ? await db.Topics.Select(topic => topic.Id).ToArrayAsync(cancellationToken)
+            : request.TopicIds;
+        var question = await db.Questions.FirstAsync(candidate => topicIds.Contains(candidate.TopicId), cancellationToken);
         var session = GameSession.Start(request.Mode, topicIds, question.Id);
-        sessions.Add(session);
-        return session;
-    }
-
-    public GameSession? GetSession(Guid id) => sessions.SingleOrDefault(session => session.Id == id);
-
-    public bool Vote(Guid sessionId, AnswerRequest request)
-    {
-        var session = GetSession(sessionId);
-        if (session is null)
+        var entity = new GameSessionEntity
         {
-            return false;
-        }
-
-        session.Vote(request.VoterId, request.AnswerId);
-        return true;
+            Id = session.Id,
+            Mode = (int)session.Mode,
+            TopicIdsJson = DomainMapping.Serialize(session.TopicIds),
+            CurrentQuestionId = session.CurrentQuestionId,
+            IsVotingClosed = session.IsVotingClosed,
+            IsRevealed = session.IsRevealed
+        };
+        db.GameSessions.Add(entity);
+        await db.SaveChangesAsync(cancellationToken);
+        return entity.ToSnapshot([]);
     }
 
-    public PollResults? Reveal(Guid sessionId)
+    public async Task<GameSessionSnapshot?> GetSessionAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var session = GetSession(sessionId);
+        var session = await db.GameSessions.FindAsync([id], cancellationToken);
         if (session is null)
         {
             return null;
         }
 
-        session.Reveal();
-        return Results(session);
+        var votes = await db.AnswerVotes
+            .Where(vote => vote.GameSessionId == id && vote.QuestionId == session.CurrentQuestionId)
+            .ToArrayAsync(cancellationToken);
+        return session.ToSnapshot(votes);
     }
 
-    public PollResults? Results(Guid sessionId)
+    public async Task<bool> VoteAsync(Guid sessionId, AnswerRequest request, CancellationToken cancellationToken = default)
     {
-        var session = GetSession(sessionId);
-        return session is null ? null : Results(session);
+        var session = await db.GameSessions.FindAsync([sessionId], cancellationToken);
+        if (session is null)
+        {
+            return false;
+        }
+
+        if (session.IsVotingClosed)
+        {
+            throw new InvalidOperationException("Voting is closed.");
+        }
+
+        var voterId = RequireTrimmed(request.VoterId, nameof(request.VoterId));
+        var answerId = RequireTrimmed(request.AnswerId, nameof(request.AnswerId)).ToUpperInvariant();
+        var existing = await db.AnswerVotes.SingleOrDefaultAsync(
+            vote => vote.GameSessionId == sessionId
+                && vote.QuestionId == session.CurrentQuestionId
+                && vote.VoterId.ToLower() == voterId.ToLower(),
+            cancellationToken);
+        if (existing is null)
+        {
+            db.AnswerVotes.Add(new AnswerVoteEntity
+            {
+                Id = Guid.NewGuid(),
+                GameSessionId = sessionId,
+                QuestionId = session.CurrentQuestionId,
+                VoterId = voterId,
+                AnswerId = answerId
+            });
+        }
+        else
+        {
+            existing.VoterId = voterId;
+            existing.AnswerId = answerId;
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return true;
     }
 
-    private PollResults Results(GameSession session)
+    public async Task<PollResults?> RevealAsync(Guid sessionId, CancellationToken cancellationToken = default)
     {
-        var question = questions.Single(question => question.Id == session.CurrentQuestionId);
-        return session.GetResults(question);
+        var session = await db.GameSessions.FindAsync([sessionId], cancellationToken);
+        if (session is null)
+        {
+            return null;
+        }
+
+        session.IsVotingClosed = true;
+        session.IsRevealed = true;
+        await db.SaveChangesAsync(cancellationToken);
+        return await ResultsAsync(sessionId, cancellationToken);
+    }
+
+    public async Task<PollResults?> ResultsAsync(Guid sessionId, CancellationToken cancellationToken = default)
+    {
+        var snapshot = await GetSessionAsync(sessionId, cancellationToken);
+        if (snapshot is null)
+        {
+            return null;
+        }
+
+        var question = await db.Questions.FindAsync([snapshot.CurrentQuestionId], cancellationToken);
+        if (question is null)
+        {
+            return null;
+        }
+
+        return CalculateResults(snapshot, question.ToDomain());
+    }
+
+    private static PollResults CalculateResults(GameSessionSnapshot session, Question question)
+    {
+        var total = session.Votes.Count;
+        var choices = question.Choices
+            .Select(choice =>
+            {
+                var count = session.Votes.Count(vote => string.Equals(vote.AnswerId, choice.Id, StringComparison.OrdinalIgnoreCase));
+                var percentage = total == 0 ? 0 : Math.Round(count * 100m / total, 2);
+                return new PollChoiceResult(choice.Id, count, percentage);
+            })
+            .ToArray();
+        var majority = choices
+            .OrderByDescending(choice => choice.Count)
+            .ThenBy(choice => choice.AnswerId, StringComparer.Ordinal)
+            .FirstOrDefault(choice => choice.Count > 0)
+            ?.AnswerId;
+
+        return new PollResults(
+            question.Id,
+            session.IsRevealed,
+            session.IsRevealed ? question.CorrectAnswerId : null,
+            session.IsVotingClosed ? majority : null,
+            choices);
+    }
+
+    private static string RequireTrimmed(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException($"{parameterName} is required.", parameterName);
+        }
+
+        return value.Trim();
     }
 }
 

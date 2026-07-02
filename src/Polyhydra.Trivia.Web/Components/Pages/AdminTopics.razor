@@ -1,0 +1,64 @@
+@page "/admin/topics"
+@inject TriviaApiClient Api
+
+<PageTitle>Admin Topics</PageTitle>
+
+<section class="page-header">
+    <h1>Admin Topics</h1>
+    <p>Create and review trivia topics. Keycloak role protection is tracked separately.</p>
+</section>
+
+@if (message is not null)
+{
+    <div class="notice">@message</div>
+}
+
+<EditForm Model="form" OnValidSubmit="CreateTopic" FormName="topic-create">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-grid">
+        <label>Title <InputText @bind-Value="form.Title" /></label>
+        <label>Slug <InputText @bind-Value="form.Slug" /></label>
+        <label>Description <InputTextArea @bind-Value="form.Description" /></label>
+        <label>Tags <InputText @bind-Value="form.Tags" /></label>
+    </div>
+    <button class="button" type="submit">Create topic</button>
+</EditForm>
+
+@if (topics is not null)
+{
+    <section class="section">
+        <h2>Existing topics</h2>
+        <div class="topic-list">
+            @foreach (var topic in topics)
+            {
+                <article class="topic-row">
+                    <div>
+                        <h3>@topic.Title</h3>
+                        <p>@topic.Description</p>
+                    </div>
+                    <a href="/topics/@topic.Slug">View</a>
+                </article>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    private TopicForm form = new();
+    private IReadOnlyList<Topic>? topics;
+    private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        topics = await Api.GetTopicsAsync();
+    }
+
+    private async Task CreateTopic()
+    {
+        var created = await Api.CreateTopicAsync(form);
+        message = $"Created topic {created.Title}.";
+        form = new TopicForm();
+        topics = await Api.GetTopicsAsync();
+    }
+}

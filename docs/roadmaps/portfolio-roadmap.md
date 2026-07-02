@@ -28,6 +28,7 @@ Original source kind: roadmap
 - The validated modernization path is `Polyhydra.Trivia.slnx`.
 - CI restores with `NuGet.Public.config` so public PR validation does not require private Azure Artifacts credentials.
 - Local validation must run restore, build, test, pack, and API publish before closing implementation issues.
+- Blazor web app validation must run against `src/Polyhydra.Trivia.Web` and the configured `TriviaApi:BaseUrl`.
 - The legacy `SpellingTest.*` projects remain migration inputs until the private package/feed dependency is removed or documented with credentials.
 
 ## V2 (confidence)

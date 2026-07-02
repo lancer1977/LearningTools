@@ -1,0 +1,67 @@
+@page "/topics/{Slug}"
+@inject TriviaApiClient Api
+
+<PageTitle>Topic</PageTitle>
+
+@if (loadError is not null)
+{
+    <div class="alert">@loadError</div>
+}
+else if (topic is null)
+{
+    <p>Loading topic...</p>
+}
+else
+{
+    <section class="page-header">
+        <h1>@topic.Title</h1>
+        <p>@topic.Description</p>
+    </section>
+
+    <section class="section">
+        <h2>Questions</h2>
+        @if (questions.Count == 0)
+        {
+            <p>No questions are available for this topic yet.</p>
+        }
+        else
+        {
+            <div class="question-list">
+                @foreach (var question in questions)
+                {
+                    <article class="question-card">
+                        <h3>@question.Prompt</h3>
+                        <ol type="A">
+                            @foreach (var choice in question.Choices)
+                            {
+                                <li>@choice.Text</li>
+                            }
+                        </ol>
+                    </article>
+                }
+            </div>
+        }
+    </section>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Topic? topic;
+    private IReadOnlyList<Question> questions = [];
+    private string? loadError;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            topic = await Api.GetTopicAsync(Slug);
+            questions = topic is null ? [] : await Api.GetQuestionsAsync(topic.Id);
+        }
+        catch (HttpRequestException exception)
+        {
+            loadError = $"Trivia API is unavailable: {exception.Message}";
+        }
+    }
+}

@@ -1,0 +1,91 @@
+@page "/play"
+@inject TriviaApiClient Api
+
+<PageTitle>Play Trivia</PageTitle>
+
+<section class="page-header">
+    <h1>Play</h1>
+    <p>Start a poll, vote, and reveal the answer.</p>
+</section>
+
+@if (loadError is not null)
+{
+    <div class="alert">@loadError</div>
+}
+else if (question is null)
+{
+    <p>Loading question...</p>
+}
+else
+{
+    <QuestionPoll Question="question" SelectedAnswerId="selectedAnswerId" SelectedAnswerIdChanged="value => selectedAnswerId = value" Disabled="hasVoted" />
+
+    <div class="button-row">
+        <button class="button" @onclick="SubmitVote" disabled="@(!CanVote)">Vote</button>
+        <button class="button secondary" @onclick="Reveal" disabled="@(session is null)">Reveal</button>
+    </div>
+
+    @if (results is not null)
+    {
+        <PollResultsDisplay Question="question" Results="results" Context="PollDisplayContext.Web" />
+    }
+}
+
+@code {
+    private Question? question;
+    private GameSessionResponse? session;
+    private PollResults? results;
+    private string selectedAnswerId = string.Empty;
+    private bool hasVoted;
+    private string? loadError;
+
+    private bool CanVote => session is not null && !string.IsNullOrWhiteSpace(selectedAnswerId) && !hasVoted;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var topic = (await Api.GetTopicsAsync()).FirstOrDefault();
+            if (topic is null)
+            {
+                loadError = "No trivia topics are available.";
+                return;
+            }
+
+            question = (await Api.GetQuestionsAsync(topic.Id)).FirstOrDefault();
+            if (question is null)
+            {
+                loadError = "No trivia questions are available.";
+                return;
+            }
+
+            session = await Api.StartSessionAsync(GameMode.Solo, [topic.Id]);
+        }
+        catch (HttpRequestException exception)
+        {
+            loadError = $"Trivia API is unavailable: {exception.Message}";
+        }
+    }
+
+    private async Task SubmitVote()
+    {
+        if (session is null || string.IsNullOrWhiteSpace(selectedAnswerId))
+        {
+            return;
+        }
+
+        await Api.SubmitAnswerAsync(session.Id, "web-player", selectedAnswerId);
+        results = await Api.GetResultsAsync(session.Id);
+        hasVoted = true;
+    }
+
+    private async Task Reveal()
+    {
+        if (session is null)
+        {
+            return;
+        }
+
+        results = await Api.RevealAsync(session.Id);
+    }
+}

@@ -1,0 +1,83 @@
+@page "/stream/poll"
+@inject TriviaApiClient Api
+
+<PageTitle>Stream Poll</PageTitle>
+
+<section class="page-header">
+    <h1>Stream Poll</h1>
+    <p>Operator view for chat-poll style questions.</p>
+</section>
+
+@if (loadError is not null)
+{
+    <div class="alert">@loadError</div>
+}
+else if (question is null)
+{
+    <p>Loading poll...</p>
+}
+else
+{
+    <QuestionPoll Question="question" SelectedAnswerId="selectedAnswerId" SelectedAnswerIdChanged="value => selectedAnswerId = value" Disabled="false" />
+
+    <div class="button-row">
+        <button class="button" @onclick="CastChatVote" disabled="@(session is null || string.IsNullOrWhiteSpace(selectedAnswerId))">Cast sample chat vote</button>
+        <button class="button secondary" @onclick="Reveal" disabled="@(session is null)">Reveal results</button>
+    </div>
+
+    @if (results is not null)
+    {
+        <PollResultsDisplay Question="question" Results="results" Context="PollDisplayContext.Stream" StreamerAnswerId="@selectedAnswerId" />
+    }
+}
+
+@code {
+    private Question? question;
+    private GameSessionResponse? session;
+    private PollResults? results;
+    private string selectedAnswerId = string.Empty;
+    private int sampleVoteNumber;
+    private string? loadError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var topic = (await Api.GetTopicsAsync()).FirstOrDefault();
+            if (topic is null)
+            {
+                loadError = "No trivia topics are available.";
+                return;
+            }
+
+            question = (await Api.GetQuestionsAsync(topic.Id)).FirstOrDefault();
+            session = await Api.StartSessionAsync(GameMode.ChatPoll, [topic.Id]);
+        }
+        catch (HttpRequestException exception)
+        {
+            loadError = $"Trivia API is unavailable: {exception.Message}";
+        }
+    }
+
+    private async Task CastChatVote()
+    {
+        if (session is null || string.IsNullOrWhiteSpace(selectedAnswerId))
+        {
+            return;
+        }
+
+        sampleVoteNumber++;
+        await Api.SubmitAnswerAsync(session.Id, $"sample-chat-{sampleVoteNumber}", selectedAnswerId);
+        results = await Api.GetResultsAsync(session.Id);
+    }
+
+    private async Task Reveal()
+    {
+        if (session is null)
+        {
+            return;
+        }
+
+        results = await Api.RevealAsync(session.Id);
+    }
+}

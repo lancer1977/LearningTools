@@ -1,0 +1,78 @@
+@page "/admin/questions"
+@inject TriviaApiClient Api
+
+<PageTitle>Admin Questions</PageTitle>
+
+<section class="page-header">
+    <h1>Admin Questions</h1>
+    <p>Draft questions for an existing topic. Review and publish workflow is tracked separately.</p>
+</section>
+
+@if (message is not null)
+{
+    <div class="notice">@message</div>
+}
+
+@if (topics is null)
+{
+    <p>Loading topics...</p>
+}
+else
+{
+    <EditForm Model="form" OnValidSubmit="CreateQuestion" FormName="question-create">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-grid">
+            <label>
+                Topic
+                <InputSelect @bind-Value="form.TopicId">
+                    @foreach (var topic in topics)
+                    {
+                        <option value="@topic.Id">@topic.Title</option>
+                    }
+                </InputSelect>
+            </label>
+            <label>Prompt <InputTextArea @bind-Value="form.Prompt" /></label>
+            <label>Choice A <InputText @bind-Value="form.ChoiceA" /></label>
+            <label>Choice B <InputText @bind-Value="form.ChoiceB" /></label>
+            <label>Choice C <InputText @bind-Value="form.ChoiceC" /></label>
+            <label>Choice D <InputText @bind-Value="form.ChoiceD" /></label>
+            <label>
+                Correct
+                <InputSelect @bind-Value="form.CorrectAnswerId">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </InputSelect>
+            </label>
+            <label>Explanation <InputTextArea @bind-Value="form.Explanation" /></label>
+        </div>
+        <button class="button" type="submit">Create draft question</button>
+    </EditForm>
+}
+
+@code {
+    private IReadOnlyList<Topic>? topics;
+    private QuestionForm form = new();
+    private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        topics = await Api.GetTopicsAsync();
+        form.TopicId = topics.FirstOrDefault()?.Id ?? Guid.Empty;
+    }
+
+    private async Task CreateQuestion()
+    {
+        if (form.TopicId == Guid.Empty)
+        {
+            message = "Select a topic before creating a question.";
+            return;
+        }
+
+        var created = await Api.CreateQuestionAsync(form);
+        message = $"Created draft question {created.Id}.";
+        form = new QuestionForm { TopicId = topics?.FirstOrDefault()?.Id ?? Guid.Empty };
+    }
+}
